@@ -1,0 +1,262 @@
+.bed {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 136px clamp(20px, 4vw, 56px);
+  background-color: #ece9e2;
+  background-image:
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.35) 24%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    32px 32px,
+    32px 32px;
+  color: #111111;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.meta {
+  position: absolute;
+  top: calc(max(24px, env(safe-area-inset-top)) + 56px);
+  right: clamp(20px, 4vw, 56px);
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Top padding leaves headroom for the first slab's projection to rise into. */
+.registry {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 168px 0 0;
+  list-style: none;
+}
+
+/* No filters/overflow/opacity here — they would flatten the Z extrusion. */
+.specimen {
+  position: relative;
+  z-index: 10;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.slab {
+  position: relative;
+  padding: 24px 32px;
+  background: rgba(22, 22, 24, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+  color: #ece9e2;
+  cursor: pointer;
+  transition: box-shadow 150ms ease-out;
+}
+
+.slab::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  background: linear-gradient(90deg, #00ff66, #ff007a, #ffea00);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
+}
+
+.header,
+.classification,
+.tag,
+.ready,
+.telemetry {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: rgba(236, 233, 226, 0.6);
+}
+
+.title {
+  margin: 24px 0 8px;
+  font-family: 'Cabinet Grotesk', var(--font-geist-sans), system-ui, sans-serif;
+  font-size: clamp(40px, 8vw, 112px);
+  font-weight: 400;
+  font-variation-settings:
+    'wght' 400,
+    'wdth' 70;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #ece9e2;
+  transition:
+    font-variation-settings 150ms ease-out,
+    color 150ms ease-out;
+}
+
+.classification {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(236, 233, 226, 0.6);
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  padding: 4px 10px;
+  border: 1px solid rgba(236, 233, 226, 0.4);
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.ready {
+  margin-left: auto;
+  font-size: 11px;
+  color: rgba(236, 233, 226, 0.8);
+}
+
+.projection {
+  position: absolute;
+  right: clamp(16px, 4vw, 48px);
+  bottom: calc(100% - 32px);
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  align-items: center;
+  gap: 16px;
+  width: min(340px, calc(100% - 32px));
+  padding: 16px;
+  border: 1px solid #00ff66;
+  background-color: rgba(4, 12, 6, 0.95);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 102, 0.08) 0 1px,
+    transparent 1px 3px
+  );
+  color: #00ff66;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
+  transform-origin: bottom center;
+  transform: translateZ(60px) scaleY(0);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 150ms ease-out,
+    opacity 150ms ease-out;
+}
+
+.vector {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(0, 255, 102, 0.8));
+}
+
+.telemetry {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.6);
+}
+
+.telemetry div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6px;
+}
+
+.telemetry dd {
+  margin: 0;
+}
+
+/* Static preview of the hover state. */
+.slabActive {
+  z-index: 50;
+}
+
+.slabActive .slab {
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.4);
+}
+
+.slabActive .slab::before {
+  opacity: 1;
+}
+
+.slabActive .title {
+  font-weight: 900;
+  font-variation-settings:
+    'wght' 900,
+    'wdth' 140;
+  color: #ffffff;
+}
+
+.slabActive .ready {
+  color: #00ff66;
+}
+
+.slabActive .projection {
+  transform: translateZ(60px) scaleY(1);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .slab {
+    padding: 20px;
+  }
+
+  .projection {
+    grid-template-columns: 72px 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slab,
+  .slab::before,
+  .title,
+  .projection {
+    transition: none;
+  }
+}
