@@ -1,0 +1,305 @@
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 136px clamp(20px, 4vw, 56px);
+  background: #f3efe6;
+  color: #111111;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.meta {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+/* Offsets clear the fixed GlobalHUD corner slots (24px inset + slot height). */
+.metaTop {
+  top: calc(max(24px, env(safe-area-inset-top)) + 56px);
+  right: clamp(20px, 4vw, 56px);
+}
+
+.metaBottom {
+  bottom: calc(max(24px, env(safe-area-inset-bottom)) + 64px);
+  left: clamp(20px, 4vw, 56px);
+}
+
+/* Filters, overflow, opacity, masks, and isolation flatten 3D — keep them off every preserve-3d node below. */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 64rem;
+  aspect-ratio: 16 / 9;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.rig {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(6deg) rotateY(-8deg);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+/* Layer 1 — Geometric Backdrop */
+.layerBackdrop {
+  inset: -10%;
+  transform: translateZ(-120px);
+}
+
+.rays {
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 62%,
+    rgba(17, 17, 17, 0.12) 0deg 5deg,
+    transparent 5deg 10deg,
+    #e6dece 10deg 15deg,
+    transparent 15deg 20deg
+  );
+}
+
+.halftone {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(17, 17, 17, 0.12) 1.6px, transparent 2px) 0 0 / 10px 10px;
+  -webkit-mask-image: radial-gradient(circle at 50% 62%, #000 0 18%, transparent 46%);
+  mask-image: radial-gradient(circle at 50% 62%, #000 0 18%, transparent 46%);
+}
+
+.plywood {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  left: 6%;
+  width: 88%;
+  height: 34%;
+  overflow: visible;
+  filter: drop-shadow(6px 6px 0 #111111);
+}
+
+/* Layer 2 — Winged Clouds */
+.layerClouds {
+  transform: translateZ(-60px);
+}
+
+.anchor {
+  position: absolute;
+  width: 32%;
+  aspect-ratio: 320 / 180;
+}
+
+.anchorLeft {
+  top: 4%;
+  left: 0;
+}
+
+.anchorRight {
+  top: 10%;
+  right: 0;
+}
+
+.cloudSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(8px 8px 0 #111111);
+}
+
+.anchorRight .cloudSvg {
+  transform: scaleX(-1);
+  filter: drop-shadow(-8px 8px 0 #111111);
+}
+
+/* Layer 3 — Reeder Manifesto */
+.layerSculpture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateZ(0);
+}
+
+.manifesto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 20px);
+  margin: 0;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.hazard {
+  display: block;
+  font-family: var(--font-geist-sans), 'Helvetica Neue', sans-serif;
+  font-size: clamp(44px, 9vw, 120px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: 0;
+  color: transparent;
+  background: repeating-linear-gradient(45deg, #ec008c 0 14px, #111111 14px 28px);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 2px #111111;
+  filter: drop-shadow(6px 6px 0 #111111);
+}
+
+.tape {
+  display: inline-block;
+  padding: 0.35em 0.8em;
+  background: #111111;
+  color: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(14px, 2.2vw, 28px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35), 0 -1px 0 #000000;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), inset 0 -2px 0 #000000, 6px 6px 0 rgba(17, 17, 17, 0.35);
+  transform: rotate(-2deg);
+}
+
+.checkerPlate {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  border: 2px solid #111111;
+  background: conic-gradient(#ffeb00 25%, #111111 0 50%, #ffeb00 0 75%, #111111 0) 0 0 / 16px 16px;
+  background-origin: content-box;
+  box-shadow: 8px 8px 0 #111111;
+}
+
+.checker {
+  display: block;
+  font-family: var(--font-geist-sans), 'Helvetica Neue', sans-serif;
+  font-size: clamp(22px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  color: transparent;
+  /* Phase-shifted one cell so glyphs read as the inverse of the plate. */
+  background: conic-gradient(#111111 25%, #ffeb00 0 50%, #111111 0 75%, #ffeb00 0) 0 0 / 16px 16px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 2px #111111;
+  paint-order: stroke fill;
+}
+
+/* Layer 4 — Eyeballs & Lightning */
+.layerForeground {
+  transform: translateZ(80px);
+}
+
+.eye {
+  position: absolute;
+  top: 56%;
+  left: 62%;
+  width: 34%;
+  transform: translate(-50%, -50%);
+}
+
+.eyeMirrored {
+  left: 38%;
+}
+
+.eyeSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(6px 6px 0 #111111);
+}
+
+.pupil {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.bolt {
+  position: absolute;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(10px 10px 0 #111111);
+}
+
+.boltA {
+  top: 24%;
+  left: 14%;
+  width: 7%;
+  transform: rotate(-28deg);
+}
+
+.boltB {
+  right: 16%;
+  bottom: 8%;
+  width: 6%;
+  transform: rotate(22deg);
+}
+
+.boltC {
+  top: 2%;
+  left: 52%;
+  width: 4%;
+  transform: rotate(8deg);
+}
+
+@media (max-width: 700px) {
+  .scene {
+    padding-bottom: 176px;
+  }
+
+  /* HUD strategy text wraps to multiple lines at this width. */
+  .metaBottom {
+    bottom: calc(max(24px, env(safe-area-inset-bottom)) + 96px);
+  }
+
+  .stage {
+    aspect-ratio: 4 / 5;
+  }
+
+  .anchor {
+    width: 52%;
+  }
+
+  .anchorLeft {
+    top: 2%;
+  }
+
+  .anchorRight {
+    top: auto;
+    bottom: 6%;
+  }
+
+  .boltA {
+    top: 30%;
+    left: 6%;
+    width: 12%;
+  }
+
+  .boltB {
+    right: 8%;
+    bottom: 26%;
+    width: 10%;
+  }
+
+  .boltC {
+    left: 64%;
+    width: 7%;
+  }
+}
