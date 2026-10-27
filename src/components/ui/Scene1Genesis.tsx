@@ -141,6 +141,11 @@ export function Scene1Genesis() {
       frame = window.requestAnimationFrame(update);
     };
     const measureAndScheduleUpdate = () => {
+      collapseStart = null;
+      title.classList.remove(styles.docking);
+      title.style.left = '';
+      title.style.top = '';
+      title.style.transform = '';
       dissolvingCharacters.forEach((character) => {
         character.style.removeProperty('--dissolve-visible-width');
       });
@@ -172,11 +177,6 @@ export function Scene1Genesis() {
       className={`${styles.scene} paper-texture`}
     >
       <div ref={viewportRef} className={styles.viewport}>
-        <header className={styles.ledgerTop}>
-          <p>[IDX-00 // MACHINE GENESIS]</p>
-          <p>REV: 2026.01</p>
-        </header>
-
         <div className={styles.stage}>
           <div id="brand-title-banner" className={styles.titleBanner}>
             <h1
@@ -203,12 +203,6 @@ export function Scene1Genesis() {
 
           <div id="eye-video-container" className={styles.mediaFrame}>
             <div className={styles.cornerMarks} aria-hidden="true" />
-            <p className={`${styles.mediaMetadata} ${styles.feed}`}>
-              [FEED: 01 // MACRO-HALFTONE]
-            </p>
-            <p className={`${styles.mediaMetadata} ${styles.frame}`}>
-              FRAME: 0001 // 60 FPS
-            </p>
 
             <div id="eye-video-placeholder" className={styles.mediaLayer}>
               <svg
@@ -274,9 +268,6 @@ export function Scene1Genesis() {
           </div>
         </div>
 
-        <footer className={styles.ledgerBottom}>
-          <p>MACRO-OPTICAL SCANNER // CALIBRATED TO VIEWPORT VELOCITY</p>
-        </footer>
       </div>
     </section>
   );

@@ -51,7 +51,6 @@ function Bolt({ className }: { className: string }) {
 export function Scene3Awakening() {
   return (
     <section id="scene-3" className={`${styles.scene} paper-texture`} aria-labelledby="awakening-title">
-      <p className={`${styles.meta} ${styles.metaTop}`}>[IDX-02 // DIMENSIONAL AWAKENING]</p>
 
       <div id="shadowbox-stage" className={styles.stage}>
         <div className={styles.rig}>
@@ -103,9 +102,6 @@ export function Scene3Awakening() {
         </div>
       </div>
 
-      <p className={`${styles.meta} ${styles.metaBottom}`}>
-        STAGE DEPTH: 200px Z-AXIS // RELIEF STACK: 4 PLANES
-      </p>
     </section>
   );
 }

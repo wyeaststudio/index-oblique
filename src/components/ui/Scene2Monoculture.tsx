@@ -28,10 +28,6 @@ export function Scene2Monoculture() {
       style={sceneStyle}
       aria-labelledby="monoculture-title"
     >
-      <header className={styles.ledger}>
-        <p>[IDX-02 // THE MONOCULTURE]</p>
-        <p>DOSSIER: 002 / OPEN</p>
-      </header>
 
       <div id="dossier-layout" className={styles.dossier}>
         <div className={styles.manifesto}>
@@ -91,10 +87,6 @@ export function Scene2Monoculture() {
         </aside>
       </div>
 
-      <footer className={styles.ledger}>
-        <p>INDEX/OBLIQUE // INDEPENDENT BY DESIGN</p>
-        <p>END OF RECORD / 002</p>
-      </footer>
     </section>
   );
 }

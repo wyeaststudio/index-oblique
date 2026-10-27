@@ -191,7 +191,7 @@ export function GlobalHUD() {
             href="#scene-1"
             aria-label="Index Oblique — back to Genesis"
           >
-            [I/O&gt;
+            [i/o&gt;
           </a>
         </div>
 

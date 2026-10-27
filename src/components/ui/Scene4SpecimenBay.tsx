@@ -304,15 +304,9 @@ export function Scene4SpecimenBay() {
       aria-labelledby="specimen-bay-title"
     >
       <header className={styles.heading}>
-        <p className={styles.meta}>
-          <span>[IDX-03 // REC]</span>
-          <span aria-hidden="true">·</span>
-          <span>ARCHIVAL CATALOG</span>
-        </p>
         <h2 id="specimen-bay-title" className={styles.visuallyHidden}>
           The Showcase: Archival Catalog
         </h2>
-        <span className={styles.sheet}>SCIENTIFIC TAROT // 04 PLATES</span>
       </header>
 
       <div className={styles.boardFrame}>
@@ -320,10 +314,6 @@ export function Scene4SpecimenBay() {
         <span className={`${styles.registrationMark} ${styles.markTopRight}`} aria-hidden="true">+</span>
         <span className={`${styles.registrationMark} ${styles.markBottomLeft}`} aria-hidden="true">+</span>
         <span className={`${styles.registrationMark} ${styles.markBottomRight}`} aria-hidden="true">+</span>
-        <div className={styles.boardLabel} aria-hidden="true">
-          <span>SPECIMEN FIELD // 01—04</span>
-          <span>OBSERVATION TABLE // 2026</span>
-        </div>
         <ul className={styles.registry} aria-label="Archival project plates">
           {SHOWCASE_PROJECTS.map((project) => (
             <ProjectPlate

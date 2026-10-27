@@ -10,6 +10,10 @@ inside the HUD corners have `pointer-events: auto`.
   desktop widths. Corner slots must be constrained to their grid tracks and
   allow text to wrap rather than overlap the opposite corner or escape the
   frame. Scale HUD type for narrow viewports and respect safe-area insets.
+- Scene navigation label shadows, in scene order: Process Magenta, Process
+  Yellow, Violet, Phosphor Green, and Process Cyan.
+- Omit decorative scene-edge captions and telemetry stamps; retain scene
+  headings, project content, and the Scene 5 production/location/contact data.
 - Switch each HUD corner and navigation marker to Swiss Coffee only when its
   center lies over Scene 2's dark substrate. Clip the light-ink frame and
   registration marks to the dark scene's viewport bounds, retaining Carbon

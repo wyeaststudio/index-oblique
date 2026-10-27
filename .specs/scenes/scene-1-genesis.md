@@ -19,8 +19,8 @@ brand collapse.
 
 ## Interaction & Kinetic Rules
 
-- Reserve a safe-area-aware top HUD gutter on desktop and mobile so the
-  Genesis ledger never overlaps the docked brand or catalog controls.
+- Reserve a safe-area-aware top HUD gutter on desktop and mobile. Omit
+  decorative edge ledgers, revision stamps, frame counters, and scanner captions.
 
 - **Video Velocity Scrub**: In `ScrollTrigger.onUpdate`, read
   `Math.abs(self.getVelocity())`. Scale `playbackRate` dynamically between `0.5`
@@ -28,6 +28,8 @@ brand collapse.
 - **Title Collapse**: Between scroll progress `0.0` and `0.4`:
   - `.dissolve-char` elements tween `opacity: 0, filter: blur(8px)`.
   - The bracket and retained `I/O` cinch to form `[I/O>`.
+  - Keep the lowercase display glyphs and regular weight throughout collapse
+    and docking; uppercase display glyphs must not introduce a heavier mark.
   - At `0.5` progress, trigger GSAP Flip to reparent `[I/O>` into
     `#hud-brand-slot` in the persistent HUD.
   - Docking does not change the mark to an accent color. The docked mark uses

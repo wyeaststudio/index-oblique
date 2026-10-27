@@ -145,6 +145,8 @@
   font-family: var(--font-logo);
   font-size: 24px;
   font-weight: 400;
+  text-transform: lowercase;
+  -webkit-font-smoothing: antialiased;
   line-height: 0.95;
   letter-spacing: -0.02em;
   text-decoration: none;
@@ -401,27 +403,27 @@
 
 .cyan {
   --scene-color: var(--color-process-cyan);
-  --scene-shadow: #b80068;
+  --scene-shadow: var(--color-process-magenta);
 }
 
 .magenta {
   --scene-color: var(--color-process-magenta);
-  --scene-shadow: #2336c4;
+  --scene-shadow: var(--color-process-yellow);
 }
 
 .yellow {
   --scene-color: var(--color-process-yellow);
-  --scene-shadow: var(--color-phosphor-emerald);
+  --scene-shadow: #9b4dff;
 }
 
 .violet {
   --scene-color: #9b4dff;
-  --scene-shadow: #ff5a00;
+  --scene-shadow: var(--color-phosphor-emerald);
 }
 
 .emerald {
   --scene-color: var(--color-phosphor-emerald);
-  --scene-shadow: #9b4dff;
+  --scene-shadow: var(--color-process-cyan);
 }
 
 @media (prefers-reduced-motion: reduce) {
