@@ -93,6 +93,7 @@
 }
 
 .brandSlot {
+  position: relative;
   display: flex;
   grid-column: 1;
   grid-row: 1;
@@ -106,6 +107,35 @@
   width: 12px;
   height: 12px;
   flex: 0 0 12px;
+  transition: opacity 120ms linear;
+}
+
+.brandPlaceholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  color: var(--hud-ink);
+  font-family: var(--font-logo);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brandSlot[data-logo-docked='true'] .brandPlaceholder {
+  visibility: visible;
+}
+
+.brandPlaceholder:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 4px;
+}
+
+.brandSlot[data-logo-docked='true'] .brandCrosshair {
+  opacity: 0;
 }
 
 .brandCrosshair::before,
@@ -244,31 +274,141 @@
 .densityWedge {
   position: absolute;
   top: 50%;
-  right: calc(var(--hud-horizontal-inset-right) + 8px);
+  right: calc(var(--hud-horizontal-inset-right) - 8px);
   display: grid;
-  gap: 2px;
   transform: translateY(-50%);
+  pointer-events: auto;
 }
 
-.densityWedge span {
-  width: 8px;
+.sceneLink {
+  position: relative;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: var(--hud-ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sceneMarker {
+  width: 12px;
   height: 12px;
+  background: var(--scene-color);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hud-ink) 25%, transparent);
+  transition: transform 420ms ease-in-out, border-radius 420ms ease-in-out;
+}
+
+.sceneLink[aria-current='location'] .sceneMarker {
+  border-radius: 50%;
+}
+
+.sceneLabel {
+  position: absolute;
+  right: calc(100% + 6px);
+  padding: 10px 14px;
+  border: 1px solid var(--color-carbon);
+  background: var(--scene-color);
+  color: var(--scene-label-ink, var(--color-carbon));
+  box-shadow: 5px 6px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  visibility: hidden;
+  transform: skewX(-18deg);
+  transform-origin: right center;
+  pointer-events: none;
+}
+
+.sceneLink:hover .sceneMarker,
+.sceneLink:focus-visible .sceneMarker {
+  transform: scale(1.5);
+}
+
+.sceneLink:hover .sceneLabel,
+.sceneLink:focus-visible .sceneLabel {
+  visibility: visible;
+  animation: labelStamp 700ms both;
+}
+
+@keyframes labelStamp {
+  0% {
+    transform: translateY(-14px) skewX(-18deg) scale(0.72, 1.28);
+    box-shadow: 10px 16px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  28% {
+    transform: translateY(5px) skewX(-24deg) scale(1, 0.64);
+    box-shadow: 1px 1px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+    animation-timing-function: cubic-bezier(0.16, 0.75, 0.3, 1);
+  }
+
+  50% {
+    transform: translateY(-7px) skewX(-14deg) scale(0.92, 1.18);
+    box-shadow: 8px 11px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.45);
+  }
+
+  68% {
+    transform: translateY(2px) skewX(-20deg) scale(1, 0.9);
+    box-shadow: 3px 3px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+    animation-timing-function: cubic-bezier(0.16, 0.75, 0.3, 1);
+  }
+
+  84% {
+    transform: translateY(-2px) skewX(-17deg) scale(0.99, 1.04);
+    box-shadow: 6px 7px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+    animation-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: skewX(-18deg);
+    box-shadow: 5px 6px 0 var(--scene-shadow, rgba(17, 17, 17, 0.84));
+  }
+}
+
+.sceneLink:focus-visible {
+  outline: 1px solid var(--hud-ink);
+  outline-offset: -2px;
 }
 
 .cyan {
-  background: var(--color-process-cyan);
+  --scene-color: var(--color-process-cyan);
+  --scene-shadow: #b80068;
 }
 
 .magenta {
-  background: var(--color-process-magenta);
+  --scene-color: var(--color-process-magenta);
+  --scene-shadow: #2336c4;
 }
 
 .yellow {
-  background: var(--color-process-yellow);
+  --scene-color: var(--color-process-yellow);
+  --scene-shadow: var(--color-phosphor-emerald);
 }
 
-.key {
-  background: var(--color-carbon);
+.violet {
+  --scene-color: #9b4dff;
+  --scene-shadow: #ff5a00;
+}
+
+.emerald {
+  --scene-color: var(--color-phosphor-emerald);
+  --scene-shadow: #9b4dff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sceneMarker,
+  .sceneLabel {
+    animation: none;
+    transition: none;
+  }
+
+  .sceneLink:hover .sceneLabel,
+  .sceneLink:focus-visible .sceneLabel {
+    animation: none;
+  }
 }
 
 @media (max-width: 560px) {

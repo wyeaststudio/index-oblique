@@ -20,6 +20,8 @@
 
 @theme static {
   --font-mono: 'Drafting Mono', monospace;
+  --font-hud: 'Drafting Mono', monospace;
+  --font-plate: 'Boska', serif;
   --font-logo: 'Major Mono Display', monospace;
   --font-manifesto: 'Clash Display', sans-serif;
   --background-image-paper-grain: url('/textures/paper-grain.svg');
@@ -188,8 +190,28 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  .font-plate {
+    font-family: var(--font-plate);
+  }
+
+  .font-plate-monument {
+    font-family: var(--font-plate);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .font-plate-italic {
+    font-family: var(--font-plate);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+
   .font-hud {
-    font-family: var(--font-mono);
+    font-family: var(--font-hud);
     font-size: var(--text-base);
     font-weight: 500;
     line-height: 1.2;
@@ -198,6 +220,11 @@
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum' 1, 'calt' 1, 'ss02' 1;
     -webkit-font-smoothing: antialiased;
+  }
+
+  .font-plate-bold {
+    font-family: var(--font-plate);
+    font-weight: 700;
   }
 }
 

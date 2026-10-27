@@ -1,195 +1,347 @@
-import type { CSSProperties } from 'react';
-import { Roboto_Flex } from 'next/font/google';
+'use client';
+
+import type { CSSProperties, PointerEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { SHOWCASE_PROJECTS } from '@/lib/showcase-projects';
+import type { ShowcaseProject } from '@/lib/showcase-projects';
 import styles from './Scene4SpecimenBay.module.css';
 
-// Needs both wdth and wght axes for the slab title compression/expansion.
-const specimenDisplay = Roboto_Flex({
-  variable: '--font-specimen-display',
-  subsets: ['latin'],
-  axes: ['wdth'],
-});
+function movePlate(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType === 'touch') return;
 
-type SpecimenVector = 'cube' | 'wave' | 'matrix' | 'torus';
-
-interface Specimen {
-  id: string;
-  title: string;
-  classification: string;
-  stack: string[];
-  vector: SpecimenVector;
-  stamp: string;
-  telemetry: { runtime: string; status: string };
+  const bounds = event.currentTarget.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+  const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+  event.currentTarget.style.setProperty('--tilt-x', `${y * -3}deg`);
+  event.currentTarget.style.setProperty('--tilt-y', `${x * 3}deg`);
 }
 
-const SPECIMEN_REGISTRY: Specimen[] = [
-  {
-    id: 'IDX-01',
-    title: 'PARAMETRIC CORE',
-    classification: 'VECTOR SPRING LATTICE',
-    stack: ['CANVAS2D', 'VERLET', 'MATH'],
-    vector: 'cube',
-    stamp: '2026.04',
-    telemetry: { runtime: '60 FPS', status: 'ACTIVE APPARATUS' },
-  },
-  {
-    id: 'IDX-02',
-    title: 'TENSOR FLUX',
-    classification: 'REACTION-DIFFUSION LAB',
-    stack: ['WEBGL2', 'GPGPU', 'SHADERS'],
-    vector: 'wave',
-    stamp: '2026.04',
-    telemetry: { runtime: '60 FPS', status: 'GPU BOUND' },
-  },
-  {
-    id: 'IDX-03',
-    title: 'GLYPH STRESS',
-    classification: 'DYNAMIC AST TYPE ENGINE',
-    stack: ['SVG', 'OPENTYPE', 'AST'],
-    vector: 'matrix',
-    stamp: '2026.04',
-    telemetry: { runtime: '60 FPS', status: 'PARSING GLYPHS' },
-  },
-  {
-    id: 'IDX-04',
-    title: 'STATE ENGINE',
-    classification: 'HEADLESS DISPATCH RUNTIME',
-    stack: ['TYPESCRIPT', 'XSTATE', 'CLI'],
-    vector: 'torus',
-    stamp: '2026.04',
-    telemetry: { runtime: 'HEADLESS', status: 'AWAITING DISPATCH' },
-  },
-];
+function resetPlate(event: PointerEvent<HTMLElement>) {
+  event.currentTarget.style.setProperty('--tilt-x', '0deg');
+  event.currentTarget.style.setProperty('--tilt-y', '0deg');
+}
 
-// Static stand-in for the hover state until pointer interaction is wired.
-const PREVIEW_ID = 'IDX-01';
+function ProjectPlate({
+  project,
+  onOpen,
+}: {
+  project: ShowcaseProject;
+  onOpen: () => void;
+}) {
+  const [previewReady, setPreviewReady] = useState(false);
+  const [previewUnavailable, setPreviewUnavailable] = useState(false);
+  const placement = {
+    '--scatter-top': project.scatter.top,
+    '--scatter-left': project.scatter.left,
+    '--scatter-rotate': `${project.scatter.rotate}deg`,
+    '--scatter-z': project.scatter.zIndex,
+    '--plate-accent': project.accentColor,
+    '--etching-url': `url("${project.etchingSvgUrl}")`,
+  } as CSSProperties;
 
-function VectorGlyph({ vector }: { vector: SpecimenVector }) {
   return (
-    <svg className={styles.vector} viewBox="0 0 120 120" aria-hidden="true">
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      >
-        {vector === 'cube' && (
-          <g transform="rotate(-12 60 60)">
-            <path strokeDasharray="3 3" d="M48 27V72H93M48 72L30 90" />
-            <path d="M30 45H75V90H30Z" />
-            <path d="M30 45L48 27H93L75 45M93 27V72L75 90" />
-          </g>
-        )}
-        {vector === 'wave' && (
-          <>
-            <path opacity="0.4" d="M10 40Q22.5 15 35 40T60 40T85 40T110 40" />
-            <path d="M10 60Q22.5 35 35 60T60 60T85 60T110 60" />
-            <path opacity="0.4" d="M10 80Q22.5 55 35 80T60 80T85 80T110 80" />
-          </>
-        )}
-        {vector === 'matrix' && (
-          <>
-            {[0, 1, 2, 3].map((row) =>
-              [0, 1, 2, 3].map((col) => (
-                <rect
-                  key={`${row}-${col}`}
-                  x={22 + col * 20}
-                  y={22 + row * 20}
-                  width="14"
-                  height="14"
-                  fill={(row + col) % 3 === 0 ? 'currentColor' : 'none'}
-                />
-              )),
-            )}
-          </>
-        )}
-        {vector === 'torus' && (
-          <>
-            <ellipse cx="60" cy="60" rx="50" ry="24" />
-            <ellipse cx="60" cy="60" rx="36" ry="16" strokeDasharray="3 3" />
-            <ellipse cx="60" cy="58" rx="20" ry="8" />
-            <ellipse cx="17" cy="60" rx="7" ry="13" opacity="0.5" />
-            <ellipse cx="103" cy="60" rx="7" ry="13" opacity="0.5" />
-          </>
-        )}
-      </g>
-    </svg>
+    <li
+      className={styles.specimen}
+      style={placement}
+      onPointerMove={movePlate}
+      onPointerLeave={resetPlate}
+    >
+      <article className={styles.plate}>
+        <button
+          className={styles.plateButton}
+          type="button"
+          aria-haspopup="dialog"
+          aria-label={`Open technical dossier: ${project.title}`}
+          onClick={onOpen}
+        >
+          <span className={styles.plateHeader}>
+            <span>{`[${project.id}]`}</span>
+            <span aria-hidden="true">· · ·</span>
+            <span>{`[${project.figure}]`}</span>
+          </span>
+          <span className={styles.engraving}>
+            <Image
+              src={project.etchingSvgUrl}
+              alt=""
+              width={360}
+              height={240}
+              unoptimized
+            />
+            <span className={styles.engravingOrb} aria-hidden="true" />
+          </span>
+          <span className={styles.title}>
+            <span>{project.plateNumber}:</span> {project.title}
+          </span>
+          <span className={styles.inscription}>
+            {`~ ${project.discipline} ~`}
+          </span>
+          <span className={styles.plateFooter}>
+            <span>{`[TAXONOMY: ${project.taxonomy.replace(/^\[\s*|\s*\]$/g, '')}]`}</span>
+            <span>{`[${project.year}]`}</span>
+          </span>
+          <span className={styles.frontAction}>INSPECT SPECIMEN ↗</span>
+
+          <span className={styles.solarization} aria-hidden="true">
+            <span className={styles.solarHeader}>
+              <span>{`[${project.id}]`}</span>
+              <span>{project.figure}</span>
+            </span>
+            <span className={styles.solarArt}>
+              <span className={styles.etchingTint} />
+              <video
+                className={`${styles.previewVideo} ${previewReady ? styles.previewReady : ''}`}
+                src={project.previewVideoUrl}
+                poster={project.etchingSvgUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="none"
+                onCanPlay={() => {
+                  setPreviewReady(true);
+                  setPreviewUnavailable(false);
+                }}
+                onError={() => {
+                  setPreviewReady(false);
+                  setPreviewUnavailable(true);
+                }}
+              />
+              {previewUnavailable && (
+                <span className={styles.motionStatus}>LIVE LOOP OFFLINE</span>
+              )}
+            </span>
+            <span className={styles.solarDetails}>
+              <span>{project.discipline}</span>
+              <span>{project.architectureNotes[0]}</span>
+              <span className={styles.solarAction}>
+                CLICK TO EXPAND DOSSIER [↗]
+              </span>
+            </span>
+          </span>
+        </button>
+      </article>
+    </li>
   );
 }
 
-const bedSpotlight = {
-  '--mouse-x': '50%',
-  '--mouse-y': '40%',
-} as CSSProperties;
+function ProjectDossier({
+  project,
+  onClose,
+}: {
+  project: ShowcaseProject;
+  onClose: () => void;
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [videoUnavailable, setVideoUnavailable] = useState(false);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog || dialog.open) return;
+
+    dialog.showModal();
+    return () => {
+      if (dialog.open) dialog.close();
+    };
+  }, []);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      className={styles.dossierDialog}
+      aria-labelledby={`dossier-title-${project.id}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          onClose();
+        }
+      }}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <div
+        className={styles.dossier}
+        style={{ '--plate-accent': project.accentColor } as CSSProperties}
+      >
+        <header className={styles.dossierTop}>
+          <div>
+            <p className={styles.dossierEyebrow}>
+              {`${project.figure} // ARCHIVAL TECHNICAL DOSSIER`}
+            </p>
+            <h2 id={`dossier-title-${project.id}`}>{project.title}</h2>
+            <p className={styles.dossierInscription}>
+              {`~ ${project.discipline} ~`}
+            </p>
+          </div>
+          <button
+            className={styles.closeButton}
+            type="button"
+            onClick={onClose}
+            aria-label="Close technical dossier"
+            autoFocus
+          >
+            CLOSE [×]
+          </button>
+        </header>
+
+        <div className={styles.dossierGrid}>
+          <div className={styles.mediaColumn}>
+            <section className={styles.mediaSection} aria-labelledby="motion-study-title">
+              <div className={styles.sectionHeading}>
+                <h3 id="motion-study-title">Motion study</h3>
+                <span>LOOP // 60 FPS</span>
+              </div>
+              <video
+                className={styles.dossierVideo}
+                src={project.previewVideoUrl}
+                poster={project.etchingSvgUrl}
+                controls
+                playsInline
+                preload="metadata"
+                onError={() => setVideoUnavailable(true)}
+              />
+              {videoUnavailable && (
+                <p className={styles.mediaFallback}>
+                  Motion file unavailable. The archival engraving remains above.
+                </p>
+              )}
+            </section>
+
+            {project.liveDemoUrl && (
+              <section className={styles.demoSection} aria-labelledby="live-specimen-title">
+                <div className={styles.sectionHeading}>
+                  <h3 id="live-specimen-title">Live specimen // sandbox</h3>
+                  <a
+                    className={styles.routeLink}
+                    href={project.liveDemoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    OPEN EXTERNAL ROUTE ↗
+                  </a>
+                </div>
+                <iframe
+                  className={styles.demoFrame}
+                  src={project.liveDemoUrl}
+                  title={`${project.title} live demo`}
+                  sandbox="allow-scripts allow-forms allow-popups"
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                />
+                <p className={styles.embedNote}>
+                  External specimens may restrict embedded viewing; open the
+                  external route if the sandbox is unavailable.
+                </p>
+              </section>
+            )}
+          </div>
+
+          <div className={styles.notesColumn}>
+            <section aria-labelledby="architecture-title">
+              <div className={styles.sectionHeading}>
+                <h3 id="architecture-title">Architecture notes</h3>
+                <span>{project.discipline}</span>
+              </div>
+              <ol className={styles.architectureNotes}>
+                {project.architectureNotes.map((note, index) => (
+                  <li key={note}>
+                    <span>{`0${index + 1}`}</span>
+                    <p>{note}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section className={styles.stackSection} aria-labelledby="stack-title">
+              <div className={styles.sectionHeading}>
+                <h3 id="stack-title">Instruments & materials</h3>
+                <span>{project.taxonomy}</span>
+              </div>
+              <ul className={styles.stackTokens}>
+                {project.stackTokens.map((token) => (
+                  <li key={token}>{token}</li>
+                ))}
+              </ul>
+            </section>
+
+            <dl className={styles.catalogueData}>
+              <div>
+                <dt>CATALOGUE ID</dt>
+                <dd>{project.id}</dd>
+              </div>
+              <div>
+                <dt>PLATE</dt>
+                <dd>{project.plateNumber}</dd>
+              </div>
+              <div>
+                <dt>YEAR</dt>
+                <dd>{project.year}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  );
+}
 
 export function Scene4SpecimenBay() {
+  const [selectedProject, setSelectedProject] =
+    useState<ShowcaseProject | null>(null);
+
   return (
     <section
       id="scene-4"
-      className={specimenDisplay.variable}
+      className={styles.scene}
       aria-labelledby="specimen-bay-title"
     >
-      <div
-        id="light-table-bed"
-        className={`${styles.bed} paper-texture`}
-        style={bedSpotlight}
-      >
-        <h2 id="specimen-bay-title" className={styles.meta}>
-          {'[IDX-03 // SPECIMEN BAY]'}
+      <header className={styles.heading}>
+        <p className={styles.meta}>
+          <span>[IDX-03 // REC]</span>
+          <span aria-hidden="true">·</span>
+          <span>ARCHIVAL CATALOG</span>
+        </p>
+        <h2 id="specimen-bay-title" className={styles.visuallyHidden}>
+          The Showcase: Archival Catalog
         </h2>
+        <span className={styles.sheet}>SCIENTIFIC TAROT // 04 PLATES</span>
+      </header>
 
-        <ul className={styles.registry}>
-          {SPECIMEN_REGISTRY.map((specimen) => {
-            const isActive = specimen.id === PREVIEW_ID;
-
-            return (
-              <li
-                key={specimen.id}
-                className={`${styles.specimen} ${isActive ? `${styles.slabActive} slab-active` : ''}`}
-              >
-                <article className={styles.slab}>
-                  <header className={styles.header}>
-                    <span>{`[${specimen.id} // R&D]`}</span>
-                    <span>{`STAMP // ${specimen.stamp}`}</span>
-                  </header>
-
-                  <h3 className={styles.title}>{specimen.title}</h3>
-                  <p className={styles.classification}>
-                    {specimen.classification}
-                  </p>
-
-                  <footer className={styles.footer}>
-                    <ul className={styles.stack} aria-label="Tech stack">
-                      {specimen.stack.map((tag) => (
-                        <li key={tag} className={styles.tag}>
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                    <span className={styles.ready}>[SPEC READY ↗]</span>
-                  </footer>
-                </article>
-
-                <div
-                  className={`${styles.projection} arcade-projection-plane`}
-                  aria-hidden={!isActive}
-                >
-                  <VectorGlyph vector={specimen.vector} />
-                  <dl className={styles.telemetry}>
-                    <div>
-                      <dt>&gt; RUNTIME:</dt>
-                      <dd>{specimen.telemetry.runtime}</dd>
-                    </div>
-                    <div>
-                      <dt>&gt; STATUS:</dt>
-                      <dd>{specimen.telemetry.status}</dd>
-                    </div>
-                  </dl>
-                </div>
-              </li>
-            );
-          })}
+      <div className={styles.boardFrame}>
+        <span className={`${styles.registrationMark} ${styles.markTopLeft}`} aria-hidden="true">+</span>
+        <span className={`${styles.registrationMark} ${styles.markTopRight}`} aria-hidden="true">+</span>
+        <span className={`${styles.registrationMark} ${styles.markBottomLeft}`} aria-hidden="true">+</span>
+        <span className={`${styles.registrationMark} ${styles.markBottomRight}`} aria-hidden="true">+</span>
+        <div className={styles.boardLabel} aria-hidden="true">
+          <span>SPECIMEN FIELD // 01—04</span>
+          <span>OBSERVATION TABLE // 2026</span>
+        </div>
+        <ul className={styles.registry} aria-label="Archival project plates">
+          {SHOWCASE_PROJECTS.map((project) => (
+            <ProjectPlate
+              key={project.id}
+              project={project}
+              onOpen={() => setSelectedProject(project)}
+            />
+          ))}
         </ul>
       </div>
+      <p className={styles.boardFootnote}>
+        HOVER TO REVEAL THE DARKROOM // SELECT A PLATE TO OPEN ITS DOSSIER
+      </p>
+
+      {selectedProject && (
+        <ProjectDossier
+          key={selectedProject.id}
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </section>
   );
 }

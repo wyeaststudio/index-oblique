@@ -3,9 +3,53 @@
 import { useEffect, useState } from 'react';
 import styles from './GlobalHUD.module.css';
 
+const scenes = [
+  { id: 'scene-1', label: '01 / Genesis', color: styles.cyan },
+  { id: 'scene-2', label: '02 / Monoculture', color: styles.magenta },
+  { id: 'scene-3', label: '03 / Awakening', color: styles.yellow },
+  { id: 'scene-4', label: '04 / Specimen Bay', color: styles.violet },
+  { id: 'scene-5', label: '05 / Colophon', color: styles.emerald },
+];
+
 export function GlobalHUD() {
   const [preloaderVisible, setPreloaderVisible] = useState(true);
   const [darkSceneVisible, setDarkSceneVisible] = useState(false);
+  const [activeScene, setActiveScene] = useState<string | null>(null);
+
+  useEffect(() => {
+    let observer: IntersectionObserver;
+
+    const observeScenes = () => {
+      observer?.disconnect();
+      // Pixel margins keep the center band tied to height, not viewport width.
+      const inset = Math.max(0, window.innerHeight / 2 - 1);
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              setActiveScene(entry.target.id);
+            }
+          }
+        },
+        { rootMargin: `-${inset}px 0px -${inset}px 0px` },
+      );
+
+      for (const scene of scenes) {
+        const section = document.getElementById(scene.id);
+        if (section) {
+          observer.observe(section);
+        }
+      }
+    };
+
+    observeScenes();
+    window.addEventListener('resize', observeScenes);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', observeScenes);
+    };
+  }, []);
 
   useEffect(() => {
     const preloader = document.getElementById('preloader-container');
@@ -15,20 +59,24 @@ export function GlobalHUD() {
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        const visible = entry.isIntersecting && entry.intersectionRatio > 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const visible = entry.isIntersecting && entry.intersectionRatio > 0;
 
-        if (entry.target.id === 'preloader-container') {
-          setPreloaderVisible(visible);
-        } else if (entry.target.id === 'scene-2') {
-          setDarkSceneVisible(visible);
-          if (!preloader) {
-            setPreloaderVisible(false);
+          if (entry.target.id === 'preloader-container') {
+            setPreloaderVisible(visible);
+          } else if (entry.target.id === 'scene-2') {
+            setDarkSceneVisible(visible);
+            if (!preloader) {
+              setPreloaderVisible(false);
+            }
           }
         }
-      }
-    });
+      },
+      // Fractional scroll positions must not leave navigation inert at scene 1.
+      { rootMargin: '-1px 0px' },
+    );
 
     if (preloader) {
       observer.observe(preloader);
@@ -51,16 +99,50 @@ export function GlobalHUD() {
     >
       <div className={styles.perimeter} aria-hidden="true" />
       <div className={styles.registrationMarks} aria-hidden="true" />
-      <div
+      <nav
         className={styles.densityWedge}
-        role="img"
-        aria-label="CMYK density step wedge"
+        aria-label="Scene navigation"
       >
-        <span className={styles.cyan} />
-        <span className={styles.magenta} />
-        <span className={styles.yellow} />
-        <span className={styles.key} />
-      </div>
+        {scenes.map((scene) => (
+          <a
+            key={scene.id}
+            className={`${styles.sceneLink} ${scene.color}`}
+            href={`#${scene.id}`}
+            aria-label={`Scene ${scene.label}`}
+            aria-current={activeScene === scene.id ? 'location' : undefined}
+            onClick={(event) => {
+              if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+              ) {
+                return;
+              }
+
+              const section = document.getElementById(scene.id);
+              if (section) {
+                event.preventDefault();
+                section.scrollIntoView({
+                  behavior: window.matchMedia('(prefers-reduced-motion: reduce)')
+                    .matches
+                    ? 'instant'
+                    : 'smooth',
+                  block: 'start',
+                });
+              }
+            }}
+          >
+            <span className={styles.sceneLabel} aria-hidden="true">
+              {scene.label}
+            </span>
+            <span
+              className={styles.sceneMarker}
+              aria-hidden="true"
+            />
+          </a>
+        ))}
+      </nav>
 
       <div className={styles.layout}>
         <div
@@ -68,7 +150,14 @@ export function GlobalHUD() {
           className={`${styles.slot} ${styles.brandSlot}`}
         >
           <span className={styles.brandCrosshair} aria-hidden="true" />
-          <span>LOC: 00°00&apos;N</span>
+          <a
+            className={styles.brandPlaceholder}
+            data-brand-placeholder
+            href="#scene-1"
+            aria-label="Index Oblique — back to Genesis"
+          >
+            [I/O&gt;
+          </a>
         </div>
 
         <div

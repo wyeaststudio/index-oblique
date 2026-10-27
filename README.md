@@ -23,8 +23,19 @@ transitions. Design and interaction references:
 - [Transition specifications](.specs/transitions)
 
 These specs describe the intended experience, not a list of completed features.
-Implementation currently starts from a Next.js foundation; the scene system and
-GSAP animation stack are not yet implemented.
+The scenes and persistent HUD are implemented on a Next.js foundation; the
+planned GSAP animation stack is not yet implemented.
+
+The right-side HUD swatches navigate to scenes 1-5: cyan for Genesis, magenta
+for Monoculture, yellow for Awakening, neon violet for Specimen Bay, and phosphor
+emerald for Colophon. The New Order-inspired label palette pairs fluorescent
+faces with saturated, deeper shadows that stay distinct against the paper:
+cyan/deep hot pink, magenta/deep electric blue, yellow/phosphor green,
+violet/neon Halloween orange, and emerald/neon violet.
+Hover or keyboard-focus a swatch to enlarge it and reveal
+the scene name; the scene at the viewport center uses a circular marker.
+Navigation scrolls smoothly unless reduced motion is requested, and each
+swatch has a touch-friendly target.
 
 ## Performance First
 

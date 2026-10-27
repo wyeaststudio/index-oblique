@@ -1,9 +1,17 @@
 .scene {
   position: relative;
+  width: 100%;
+  height: 150vh;
+  height: 150svh;
+}
+
+.viewport {
+  position: sticky;
+  top: 0;
   display: grid;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
   padding: 24px clamp(20px, 4vw, 56px);
@@ -46,7 +54,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(20px, 4vh, 40px);
+  gap: clamp(12px, 2vh, 20px);
 }
 
 .mediaFrame {
@@ -130,10 +138,19 @@
   display: grid;
   width: 100%;
   place-items: center;
-  padding: 12px;
+  padding: 0;
+}
+
+.titleBanner:has(.docking) {
+  min-height: var(--title-placeholder-height, 0px);
 }
 
 .logo {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+  width: max-content;
   max-width: 100%;
   margin: 0;
   color: var(--color-carbon);
@@ -143,10 +160,45 @@
   text-transform: lowercase;
   white-space: nowrap;
   text-align: center;
+  --collapse-progress: 0;
+}
+
+.logo.docked {
+  opacity: 0;
 }
 
 .logo span {
-  display: inline;
+  display: block;
+}
+
+.dissolveChar {
+  width: var(--dissolve-visible-width, auto);
+  overflow: hidden;
+  opacity: calc(1 - var(--collapse-progress));
+  filter: blur(var(--dissolve-blur, 0px));
+  white-space: nowrap;
+}
+
+.bracketLeft,
+.bracketRight {
+  transition: none;
+}
+
+.bracketLeft {
+  transform: translateX(var(--left-bracket-shift, 0em));
+}
+
+.bracketRight {
+  transform: translateX(var(--right-bracket-shift, 0em));
+}
+
+.docking {
+  position: fixed;
+  z-index: 910;
+  width: max-content;
+  max-width: none;
+  transform-origin: top left;
+  pointer-events: none;
 }
 
 .logo:global(.collapsed) {
@@ -165,14 +217,20 @@
       88px,
       calc(env(safe-area-inset-bottom, 0px) + 64px)
     );
-    min-height: calc(
+    height: calc(
+      150svh + var(--hud-top-gutter) + var(--hud-bottom-gutter) - 40px
+    );
+  }
+
+  .viewport {
+    height: calc(
       100svh + var(--hud-top-gutter) + var(--hud-bottom-gutter) - 40px
     );
     padding-top: var(--hud-top-gutter);
     padding-bottom: var(--hud-bottom-gutter);
   }
 
-  .scene {
+  .viewport {
     padding-inline: 20px;
   }
 

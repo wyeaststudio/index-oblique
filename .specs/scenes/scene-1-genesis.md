@@ -27,3 +27,7 @@ brand collapse.
   - The bracket and retained `I/O` cinch to form `[I/O>`.
   - At `0.5` progress, trigger GSAP Flip to reparent `[I/O>` into
     `#hud-brand-slot` in the persistent HUD.
+  - Docking does not change the mark to an accent color. The docked mark uses
+    the HUD ink, including its light ink on Scene 2's dark substrate.
+  - The docked mark lives in the fixed HUD, remaining visible through Scenes
+    2–5 regardless of Scene 1 clipping. It links back to Genesis.
