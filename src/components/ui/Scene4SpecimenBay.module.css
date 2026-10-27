@@ -1,262 +1,924 @@
-.bed {
+.scene {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
-  padding: 136px clamp(20px, 4vw, 56px);
-  background-color: #ece9e2;
-  background-image:
-    radial-gradient(
-      circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.35) 24%,
-      rgba(255, 255, 255, 0) 55%
-    ),
-    linear-gradient(rgba(17, 17, 17, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    32px 32px,
-    32px 32px;
+  min-height: 120vh;
+  min-height: 120svh;
+  padding: 136px clamp(20px, 4vw, 56px) 42px;
+  overflow: hidden;
+  background: #f3efe6;
   color: #111111;
-  overflow: clip;
   isolation: isolate;
 }
 
-.meta {
+.scene::before {
   position: absolute;
-  top: calc(max(24px, env(safe-area-inset-top)) + 56px);
-  right: clamp(20px, 4vw, 56px);
-  margin: 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: 0;
-}
-
-/* Top padding leaves headroom for the first slab's projection to rise into. */
-.registry {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 168px 0 0;
-  list-style: none;
-}
-
-/* No filters/overflow/opacity here — they would flatten the Z extrusion. */
-.specimen {
-  position: relative;
-  z-index: 10;
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.slab {
-  position: relative;
-  padding: 24px 32px;
-  background: rgba(22, 22, 24, 0.85);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-  color: #ece9e2;
-  cursor: pointer;
-  transition: box-shadow 150ms ease-out;
-}
-
-.slab::before {
+  z-index: -1;
+  inset: -10%;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 31px, #d5d0c5 31px 32px),
+    repeating-linear-gradient(90deg, transparent 0 31px, #d5d0c5 31px 32px);
   content: '';
-  position: absolute;
-  inset: -1px;
-  padding: 1px;
-  background: linear-gradient(90deg, #00ff66, #ff007a, #ffea00);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box exclude,
-    linear-gradient(#000 0 0);
-  opacity: 0;
+  opacity: 0.32;
   pointer-events: none;
-  transition: opacity 150ms ease-out;
+  transform: rotate(-1.4deg) scale(1.04);
 }
 
-.header,
-.classification,
-.tag,
-.ready,
-.telemetry {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+.heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 1440px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.56);
+}
+
+.meta,
+.sheet,
+.boardLabel,
+.plateHeader,
+.plateFooter,
+.frontAction,
+.solarHeader,
+.solarDetails,
+.solarAction,
+.boardFootnote,
+.dossierEyebrow,
+.closeButton,
+.sectionHeading,
+.stackTokens,
+.catalogueData,
+.routeLink,
+.embedNote,
+.mediaFallback {
+  font-family: var(--font-mono);
   letter-spacing: 0.04em;
 }
 
-.header {
+.meta,
+.sheet,
+.boardLabel,
+.plateHeader,
+.plateFooter,
+.frontAction,
+.solarHeader,
+.solarDetails,
+.solarAction {
+  font-family: var(--font-hud);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: var(--text-telemetry);
+  line-height: 1.6;
+}
+
+.sheet {
+  font-size: var(--text-telemetry);
+  line-height: 1.6;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.boardFrame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1440px;
+  height: 85vh;
+  height: 85svh;
+  min-height: 720px;
+  max-height: 1050px;
+  border: 1px solid rgba(17, 17, 17, 0.72);
+  background: rgba(243, 239, 230, 0.3);
+  box-shadow: inset 0 0 50px rgba(76, 57, 34, 0.08);
+  isolation: isolate;
+}
+
+.boardLabel {
+  position: absolute;
+  top: 14px;
+  right: 22px;
+  left: 22px;
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-size: 11px;
-  line-height: 1.6;
-  color: rgba(236, 233, 226, 0.6);
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.25);
+  font-size: var(--text-micro);
+  line-height: 1.5;
+}
+
+.registrationMark {
+  position: absolute;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.markTopLeft {
+  top: -9px;
+  left: -7px;
+}
+
+.markTopRight {
+  top: -9px;
+  right: -7px;
+}
+
+.markBottomLeft {
+  bottom: -9px;
+  left: -7px;
+}
+
+.markBottomRight {
+  right: -7px;
+  bottom: -9px;
+}
+
+.registry {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.specimen {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  position: absolute;
+  top: var(--scatter-top);
+  left: var(--scatter-left);
+  z-index: var(--scatter-z);
+  width: clamp(245px, 26vw, 330px);
+  perspective: 1100px;
+  transform: rotate(var(--scatter-rotate));
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    z-index 0s;
+}
+
+.specimen:hover,
+.specimen:focus-within {
+  z-index: 20;
+  transform: rotate(var(--scatter-rotate)) translateY(-7px);
+}
+
+.plate {
+  position: relative;
+  padding: 7px;
+  border: 1px solid rgba(17, 17, 17, 0.85);
+  outline: 1px solid rgba(17, 17, 17, 0.55);
+  outline-offset: 3px;
+  background: #f3efe6;
+  box-shadow: 5px 6px 0 rgba(17, 17, 17, 0.84);
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    outline-color 200ms ease,
+    box-shadow 220ms ease;
+}
+
+.specimen:hover .plate,
+.specimen:focus-within .plate {
+  border-color: var(--plate-accent);
+  outline-color: var(--plate-accent);
+  background: #111111;
+  box-shadow: 8px 10px 0 rgba(17, 17, 17, 0.92);
+}
+
+.plateButton {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 10px;
+  overflow: visible;
+  border: 1px solid rgba(17, 17, 17, 0.48);
+  border-radius: 0;
+  background: transparent;
+  color: #111111;
+  text-align: left;
+  cursor: pointer;
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 140ms ease-out;
+}
+
+.plateButton:focus-visible {
+  outline: 2px solid var(--plate-accent);
+  outline-offset: 5px;
+}
+
+.specimen:hover .plateButton,
+.specimen:focus-within .plateButton {
+  border-color: color-mix(in srgb, var(--plate-accent) 70%, transparent);
+  color: var(--plate-accent);
+}
+
+.plateHeader,
+.plateFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: var(--text-micro);
+  line-height: 1.5;
+}
+
+.plateHeader {
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.38);
+}
+
+.specimen:hover .plateHeader,
+.specimen:hover .plateFooter,
+.specimen:focus-within .plateHeader,
+.specimen:focus-within .plateFooter {
+  border-color: color-mix(in srgb, var(--plate-accent) 55%, transparent);
+}
+
+.engraving {
+  position: relative;
+  display: grid;
+  height: clamp(160px, 19vh, 205px);
+  place-items: center;
+  margin: 9px 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(17, 17, 17, 0.14) 0.7px, transparent 0.9px) 0 0 / 5px 5px,
+    #e8e1d3;
+  transition: background-color 180ms ease;
+}
+
+.specimen:hover .engraving,
+.specimen:focus-within .engraving {
+  background: #111111;
+}
+
+.engraving img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transform: scale(0.96);
+  transition:
+    opacity 180ms ease,
+    transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.specimen:hover .engraving img,
+.specimen:focus-within .engraving img {
+  opacity: 0.15;
+  transform: scale(1.02);
+}
+
+.engravingOrb {
+  position: absolute;
+  right: 11%;
+  bottom: 12%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid var(--plate-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--plate-accent) 16%, transparent);
+  animation: orbit-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.engravingOrb::before,
+.engravingOrb::after {
+  position: absolute;
+  inset: -6px 7px;
+  border: 1px solid color-mix(in srgb, var(--plate-accent) 80%, transparent);
+  border-radius: 50%;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.engravingOrb::after {
+  transform: rotate(-45deg);
 }
 
 .title {
-  margin: 24px 0 8px;
-  font-family: var(--font-specimen-display), var(--font-geist-sans), system-ui, sans-serif;
-  font-size: clamp(40px, 8vw, 112px);
+  display: block;
+  padding: 3px 0 9px;
+  font-family: var(--font-plate);
+  font-size: clamp(1.25rem, 1.6vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.title span {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font-hud);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.inscription {
+  display: block;
+  margin: -4px 0 9px;
+  font-family: var(--font-plate);
+  font-size: 16px;
+  font-style: italic;
   font-weight: 400;
-  font-variation-settings:
-    'wght' 400,
-    'wdth' 70;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  color: #ece9e2;
-  transition:
-    font-variation-settings 150ms ease-out,
-    color 150ms ease-out;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
-.classification {
-  margin: 0;
-  font-size: 11px;
-  color: rgba(236, 233, 226, 0.6);
+.plateFooter {
+  align-items: flex-start;
+  padding-top: 7px;
+  border-top: 1px solid rgba(17, 17, 17, 0.38);
+  color: rgba(17, 17, 17, 0.78);
 }
 
-.footer {
+.plateFooter span:first-child {
+  max-width: 84%;
+  overflow-wrap: anywhere;
+}
+
+.specimen:hover .plateFooter,
+.specimen:focus-within .plateFooter {
+  color: color-mix(in srgb, var(--plate-accent) 84%, transparent);
+}
+
+.frontAction {
+  align-self: flex-end;
+  margin-top: 9px;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.solarization {
+  position: absolute;
+  z-index: 5;
+  inset: -1px;
+  display: grid;
+  grid-template-rows: auto minmax(110px, 1fr) auto;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid var(--plate-accent);
+  outline: 1px solid var(--plate-accent);
+  outline-offset: 3px;
+  background: #111111;
+  color: var(--plate-accent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.specimen:hover .solarization,
+.plateButton:focus-visible .solarization {
+  opacity: 1;
+}
+
+.solarHeader {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-top: 24px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--plate-accent) 55%, transparent);
+  font-size: 8px;
+  line-height: 1.4;
 }
 
-.stack {
+.solarArt {
+  position: relative;
+  display: grid;
+  min-height: 120px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px dashed color-mix(in srgb, var(--plate-accent) 65%, transparent);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--plate-accent) 26%, transparent) 0.7px, transparent 0.9px) 0 0 / 5px 5px,
+    #111111;
+}
+
+.etchingTint {
+  position: absolute;
+  inset: 4px;
+  background: var(--plate-accent);
+  mask-image: var(--etching-url);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  opacity: 0.9;
+}
+
+.previewVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #111111;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.previewReady {
+  opacity: 0.94;
+}
+
+.motionStatus {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 3px 5px;
+  background: var(--plate-accent);
+  color: #111111;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.solarDetails {
+  display: grid;
+  gap: 5px;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.solarDetails > span:nth-child(2) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.solarAction {
+  justify-self: end;
+  margin-top: 2px;
+  padding: 4px 6px;
+  border: 1px solid var(--plate-accent);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.boardFootnote {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: -4px 0 0;
+  font-size: var(--text-micro);
+  line-height: 1.6;
+  text-align: right;
+}
+
+.dossierDialog {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: clamp(12px, 2vw, 28px);
+  overflow: auto;
+  border: 0;
+  background: #111111;
+  color: #111111;
+}
+
+.dossierDialog::backdrop {
+  background: rgba(8, 8, 8, 0.9);
+  backdrop-filter: blur(5px);
+}
+
+.dossier {
+  position: relative;
+  width: min(100%, 1500px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: clamp(18px, 3vw, 42px);
+  border: 1px solid #111111;
+  outline: 1px solid rgba(243, 239, 230, 0.56);
+  outline-offset: -7px;
+  background-color: #f3efe6;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 29px, rgba(17, 17, 17, 0.035) 29px 30px);
+}
+
+.dossierTop {
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 10px 6px 20px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.65);
+}
+
+.dossierEyebrow {
+  margin: 0 0 10px;
+  font-size: var(--text-telemetry);
+  line-height: 1.6;
+}
+
+.dossierTop h2 {
+  max-width: 1000px;
+  margin: 0;
+  font-family: var(--font-plate);
+  font-size: clamp(38px, 6vw, 86px);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.dossierInscription {
+  margin: 10px 0 0;
+  font-family: var(--font-plate);
+  font-size: clamp(18px, 2vw, 26px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.closeButton {
+  flex: 0 0 auto;
+  padding: 10px 13px;
+  border: 1px solid #111111;
+  border-radius: 0;
+  background: #111111;
+  color: #f3efe6;
+  font-size: var(--text-telemetry);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.closeButton:hover,
+.closeButton:focus-visible {
+  background: #ec008c;
+  color: #111111;
+}
+
+.closeButton:focus-visible,
+.routeLink:focus-visible {
+  outline: 2px solid #ec008c;
+  outline-offset: 3px;
+}
+
+.dossierGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: clamp(22px, 4vw, 56px);
+  padding: 28px 6px 8px;
+}
+
+.mediaColumn,
+.notesColumn {
+  min-width: 0;
+}
+
+.mediaColumn {
+  display: grid;
+  align-content: start;
+  gap: 28px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.62);
+  font-size: var(--text-telemetry);
+  line-height: 1.5;
+}
+
+.sectionHeading h3 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.sectionHeading > span {
+  text-align: right;
+}
+
+.dossierVideo,
+.demoFrame {
+  display: block;
+  width: 100%;
+  border: 1px solid #111111;
+  background:
+    radial-gradient(circle, rgba(17, 17, 17, 0.16) 0.7px, transparent 0.9px) 0 0 / 5px 5px,
+    #e8e1d3;
+}
+
+.dossierVideo {
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+.demoFrame {
+  height: clamp(240px, 37vh, 500px);
+}
+
+.mediaFallback,
+.embedNote {
+  margin: 7px 0 0;
+  font-size: var(--text-micro);
+  line-height: 1.6;
+}
+
+.routeLink {
+  color: #111111;
+  font-size: var(--text-micro);
+  text-align: right;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.routeLink:hover {
+  background: #ffeb00;
+}
+
+.architectureNotes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architectureNotes li {
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(17, 17, 17, 0.5);
+  background: rgba(243, 239, 230, 0.65);
+}
+
+.architectureNotes li > span {
+  color: var(--color-carbon);
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
+  font-weight: 700;
+}
+
+.architectureNotes p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.stackSection {
+  margin-top: 26px;
+}
+
+.stackTokens {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.tag {
-  padding: 4px 10px;
-  border: 1px solid rgba(236, 233, 226, 0.4);
-  border-radius: 999px;
-  font-size: 10px;
-  line-height: 1.4;
+.stackTokens li {
+  padding: 10px;
+  border: 1px solid rgba(17, 17, 17, 0.52);
+  font-size: var(--text-telemetry);
+  line-height: 1.45;
 }
 
-.ready {
-  margin-left: auto;
-  font-size: 11px;
-  color: rgba(236, 233, 226, 0.8);
-}
-
-.projection {
-  position: absolute;
-  right: clamp(16px, 4vw, 48px);
-  bottom: calc(100% - 32px);
-  z-index: 50;
+.catalogueData {
   display: grid;
-  grid-template-columns: 112px 1fr;
-  align-items: center;
-  gap: 16px;
-  width: min(340px, calc(100% - 32px));
-  padding: 16px;
-  border: 1px solid #00ff66;
-  background-color: rgba(4, 12, 6, 0.95);
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 255, 102, 0.08) 0 1px,
-    transparent 1px 3px
-  );
-  color: #00ff66;
-  filter: drop-shadow(0 0 8px rgba(0, 255, 102, 0.4));
-  transform-origin: bottom center;
-  transform: translateZ(60px) scaleY(0);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform 150ms ease-out,
-    opacity 150ms ease-out;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 26px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(17, 17, 17, 0.62);
 }
 
-.vector {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 0 4px rgba(0, 255, 102, 0.8));
+.catalogueData dt {
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  opacity: 0.65;
 }
 
-.telemetry {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  font-size: 11px;
-  line-height: 1.4;
-  text-shadow: 0 0 6px rgba(0, 255, 102, 0.6);
+.catalogueData dd {
+  margin: 4px 0 0;
+  font-size: var(--text-telemetry);
+  font-weight: 700;
 }
 
-.telemetry div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 6px;
-}
-
-.telemetry dd {
-  margin: 0;
-}
-
-/* Static preview of the hover state. */
-.slabActive {
-  z-index: 50;
-}
-
-.slabActive .slab {
-  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.4);
-}
-
-.slabActive .slab::before {
-  opacity: 1;
-}
-
-.slabActive .title {
-  font-weight: 900;
-  font-variation-settings:
-    'wght' 900,
-    'wdth' 140;
-  color: #ffffff;
-}
-
-.slabActive .ready {
-  color: #00ff66;
-}
-
-.slabActive .projection {
-  transform: translateZ(60px) scaleY(1);
-  opacity: 1;
-}
-
-@media (max-width: 640px) {
-  .slab {
-    padding: 20px;
+@keyframes orbit-pulse {
+  0%,
+  100% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.65;
   }
 
-  .projection {
-    grid-template-columns: 72px 1fr;
+  50% {
+    transform: scale(1.08) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1000px) {
+  .scene {
+    min-height: auto;
+  }
+
+  .boardFrame {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 54px 24px 32px;
+  }
+
+  .registry {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 24px;
+    width: min(100%, 800px);
+    margin: 0 auto;
+  }
+
+  .specimen {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    transform: rotate(var(--scatter-rotate));
+  }
+
+  .specimen:hover,
+  .specimen:focus-within {
+    transform: rotate(var(--scatter-rotate)) translateY(-5px);
+  }
+
+  .engraving {
+    height: clamp(160px, 25vw, 210px);
+  }
+
+  .solarization {
+    grid-template-rows: auto minmax(120px, 1fr) auto;
+  }
+
+  .dossierGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .scene {
+    gap: 14px;
+    padding: 126px 16px 34px;
+  }
+
+  .heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sheet {
+    font-size: 9px;
+  }
+
+  .boardFrame {
+    padding: 50px 16px 28px;
+  }
+
+  .boardLabel {
+    right: 13px;
+    left: 13px;
+    font-size: 7px;
+  }
+
+  .registry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    width: min(100%, 370px);
+  }
+
+  .specimen {
+    transform: rotate(calc(var(--scatter-rotate) * 0.55));
+  }
+
+  .specimen:hover,
+  .specimen:focus-within {
+    transform: rotate(calc(var(--scatter-rotate) * 0.55)) translateY(-4px);
+  }
+
+  .engraving {
+    height: 205px;
+  }
+
+  .title {
+    font-size: clamp(1.25rem, 1.6vw, 1.75rem);
+  }
+
+  .boardFootnote {
+    font-size: 7px;
+    text-align: left;
+  }
+
+  .dossierDialog {
+    padding: 0;
+  }
+
+  .dossier {
+    padding: 24px 18px;
+    outline-offset: -5px;
+  }
+
+  .dossierTop {
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+
+  .dossierTop h2 {
+    font-size: clamp(42px, 12vw, 62px);
+  }
+
+  .closeButton {
+    align-self: flex-end;
+  }
+
+  .dossierGrid {
+    gap: 30px;
+    padding: 22px 4px 4px;
+  }
+
+  .sectionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sectionHeading > span {
+    text-align: left;
+  }
+
+  .stackTokens {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .catalogueData {
+    gap: 7px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slab,
-  .slab::before,
-  .title,
-  .projection {
+  .plateButton {
+    transform: none;
+  }
+
+  .specimen,
+  .plate,
+  .plateButton,
+  .engraving img,
+  .solarization,
+  .previewVideo {
     transition: none;
+  }
+
+  .engravingOrb {
+    animation: none;
   }
 }

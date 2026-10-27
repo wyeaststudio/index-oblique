@@ -16,6 +16,8 @@ lithographic registration reset.
   - `.cmyk-plate.plate-key`: Rotated screen 45°, Carbon Black master plate.
 - `#colophon-resume-grid`: Monospace metadata columns listing Storybook systems,
   tech stack specifications, and press run credits.
+- Colophon metadata header includes the location coordinates previously shown
+  in the persistent HUD.
 - `#re-crank-button`: High-contrast industrial CTA:
   `[ RE-CRANK PRESS // IDX-00 ↑ ]`.
 

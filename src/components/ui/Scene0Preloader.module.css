@@ -5,8 +5,9 @@
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
-  background: #f3efe6;
-  color: #111111;
+  background: var(--color-paper);
+  color: var(--color-carbon);
+  -webkit-font-smoothing: antialiased;
 }
 
 .stage {
@@ -22,13 +23,17 @@
   max-height: 100%;
   aspect-ratio: 7 / 9;
   overflow: hidden;
-  border: 1px solid #111111;
-  background: #f3efe6;
+  border: 1px solid var(--color-carbon);
+  background: var(--color-paper);
   background-image:
-    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
-    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
-    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
-    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111);
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon)),
+    linear-gradient(var(--color-carbon), var(--color-carbon));
   background-repeat: no-repeat;
   background-size:
     15px 1px,
@@ -63,8 +68,8 @@
   bottom: 14px;
   left: 12px;
   margin: 0;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
   line-height: 1.2;
   text-align: center;
 }
@@ -77,7 +82,7 @@
   left: 0;
   height: 120px;
   transform: translateY(-50%);
-  background: #ec008c;
+  background: var(--color-process-magenta);
   mix-blend-mode: multiply;
   pointer-events: none;
 }
@@ -87,7 +92,7 @@
   z-index: 1;
   width: 12px;
   height: 12px;
-  color: #111111;
+  color: var(--color-carbon);
 }
 
 .registrationMark::before,
@@ -112,23 +117,23 @@
 }
 
 .topLeft {
-  top: 24px;
-  left: 24px;
+  top: 8px;
+  left: 8px;
 }
 
 .topRight {
-  top: 24px;
-  right: 24px;
+  top: 8px;
+  right: 8px;
 }
 
 .bottomLeft {
-  bottom: 24px;
-  left: 24px;
+  bottom: 8px;
+  left: 8px;
 }
 
 .bottomRight {
-  right: 24px;
-  bottom: 24px;
+  right: 8px;
+  bottom: 8px;
 }
 
 .status {
@@ -140,9 +145,9 @@
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
-  line-height: 1.4;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.2;
 }
 
 .status span:first-child {
@@ -162,7 +167,7 @@
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 2px;
-    font-size: 9px;
+    font-size: var(--text-base);
   }
 
   .status span:first-child,

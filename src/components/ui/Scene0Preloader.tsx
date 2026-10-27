@@ -34,7 +34,10 @@ const irisMarks = Array.from({ length: 16 }, (_, index) => {
 
 export function Scene0Preloader() {
   return (
-    <div id="preloader-container" className={styles.container}>
+    <div
+      id="preloader-container"
+      className={`${styles.container} font-hud paper-texture`}
+    >
       <span
         className={`${styles.registrationMark} ${styles.topLeft}`}
         aria-hidden="true"
@@ -124,7 +127,6 @@ export function Scene0Preloader() {
               <rect x="46" y="389" width="230" height="1" />
             </g>
           </svg>
-          <p className={styles.caption}>STATIC EYE POSTER // 1-BIT PROOF</p>
           <div
             id="squeegee-pass"
             className={styles.squeegeePass}
@@ -133,11 +135,6 @@ export function Scene0Preloader() {
         </div>
       </div>
 
-      <footer id="preloader-status" className={styles.status}>
-        <span>[PRESS RUN: IDX-00 // CALIBRATION MODE]</span>
-        <span>[ OPTICAL DRUM: 5500K STABILIZED ]</span>
-        <span>STATUS: PRIMING OPTICAL DRUM // 100%</span>
-      </footer>
     </div>
   );
 }

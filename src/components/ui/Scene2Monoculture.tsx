@@ -1,8 +1,20 @@
 import type { CSSProperties } from 'react';
 import styles from './Scene2Monoculture.module.css';
 
-const manifesto =
-  'THE MONOCULTURE HAS FLATTENED THE WEB. WE ARE REBUILDING THE DIMENSIONS.';
+const manifestoLines = [
+  'TEN THOUSAND IDENTICAL INPUTS',
+  'BREATHING RECYCLED AIR.',
+  '"WE FORGOT HOW TO BREAK THE GRID."',
+];
+
+function ManifestoLines() {
+  return manifestoLines.map((line) => (
+    <span key={line}>
+      {line}
+      <br />
+    </span>
+  ));
+}
 
 const sceneStyle: CSSProperties & { '--chroma-shift': string } = {
   '--chroma-shift': '6px',
@@ -16,23 +28,19 @@ export function Scene2Monoculture() {
       style={sceneStyle}
       aria-labelledby="monoculture-title"
     >
-      <header className={styles.ledger}>
-        <p>[IDX-02 // THE MONOCULTURE]</p>
-        <p>DOSSIER: 002 / OPEN</p>
-      </header>
 
       <div id="dossier-layout" className={styles.dossier}>
         <div className={styles.manifesto}>
           <p className={styles.label}>001 / STATEMENT OF INTENT</p>
           <div id="chroma-text-wrapper" className={styles.chromaText}>
-            <h2 className={`${styles.textLayer} ${styles.cyan}`} aria-hidden="true">
-              {manifesto}
+            <h2 className={`${styles.textLayer} ${styles.cyan} font-manifesto`} aria-hidden="true">
+              <ManifestoLines />
             </h2>
-            <h2 className={`${styles.textLayer} ${styles.magenta}`} aria-hidden="true">
-              {manifesto}
+            <h2 className={`${styles.textLayer} ${styles.magenta} font-manifesto`} aria-hidden="true">
+              <ManifestoLines />
             </h2>
-            <h2 id="monoculture-title" className={`${styles.textLayer} ${styles.key}`}>
-              {manifesto}
+            <h2 id="monoculture-title" className={`${styles.textLayer} ${styles.key} font-manifesto`}>
+              <ManifestoLines />
             </h2>
           </div>
           <p className={styles.label}>NOT A TEMPLATE. A POINT OF DEPARTURE.</p>
@@ -79,10 +87,6 @@ export function Scene2Monoculture() {
         </aside>
       </div>
 
-      <footer className={styles.ledger}>
-        <p>INDEX/OBLIQUE // INDEPENDENT BY DESIGN</p>
-        <p>END OF RECORD / 002</p>
-      </footer>
     </section>
   );
 }

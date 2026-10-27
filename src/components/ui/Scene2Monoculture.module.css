@@ -8,16 +8,16 @@
   min-height: 100vh;
   min-height: 100svh;
   padding: 80px clamp(20px, 4vw, 56px);
-  background: #f3efe6;
-  color: #111111;
+  background: var(--color-carbon-cool);
+  color: var(--color-paper);
   isolation: isolate;
 }
 
 .ledger,
 .label,
 .sidebar {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -39,7 +39,7 @@
 .dossier {
   display: grid;
   grid-template-columns: minmax(0, 65fr) minmax(0, 35fr);
-  border-block: 1px solid #111111;
+  border-block: 1px solid var(--color-ghost-light);
 }
 
 .manifesto {
@@ -59,24 +59,20 @@
   position: absolute;
   inset: 0;
   margin: 0;
-  font-family: var(--font-geist-sans), 'Helvetica Neue', sans-serif;
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 0.98;
-  letter-spacing: 0;
+  font-size: clamp(2rem, 5.2vw, 5rem);
   overflow-wrap: anywhere;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
 }
 
 .cyan {
-  color: #00f0ff;
+  color: var(--color-process-cyan);
   transform: translateX(calc(var(--chroma-shift) * -1));
   pointer-events: none;
   user-select: none;
 }
 
 .magenta {
-  color: #ec008c;
+  color: var(--color-process-magenta);
   transform: translateX(var(--chroma-shift));
   pointer-events: none;
   user-select: none;
@@ -84,7 +80,8 @@
 
 .key {
   position: relative;
-  color: #111111;
+  color: var(--color-paper);
+  mix-blend-mode: normal;
 }
 
 .sidebar {
@@ -94,7 +91,7 @@
   justify-content: space-between;
   gap: 32px;
   padding: 28px;
-  border-left: 1px solid rgba(17, 17, 17, 0.12);
+  border-left: 1px solid var(--color-ghost-light);
   overflow-wrap: anywhere;
 }
 
@@ -115,10 +112,12 @@
 }
 
 .redacted {
-  background-color: #111111;
-  color: #111111;
+  padding-inline: 0.15em;
+  background-color: var(--color-redaction);
+  color: transparent;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+  user-select: none;
 }
 
 .wireframe svg {
@@ -126,7 +125,7 @@
   width: 100%;
   height: auto;
   aspect-ratio: 2 / 1;
-  color: rgba(17, 17, 17, 0.12);
+  color: var(--color-ghost-light);
 }
 
 .wireframe figcaption {
@@ -134,14 +133,12 @@
 }
 
 @media (min-width: 1280px) {
-  .textLayer {
-    font-size: 80px;
-  }
+  .textLayer { font-size: clamp(5rem, 5.2vw, 6rem); }
 }
 
 @media (max-width: 1000px) {
   .textLayer {
-    font-size: 48px;
+    font-size: clamp(2rem, 5vw, 3rem);
   }
 
   .manifesto {
@@ -168,12 +165,12 @@
   }
 
   .textLayer {
-    font-size: 40px;
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
   }
 
   .sidebar {
     padding: 24px 8px;
-    border-top: 1px solid rgba(17, 17, 17, 0.12);
+    border-top: 1px solid var(--color-ghost-light);
     border-left: 0;
   }
 
@@ -184,6 +181,6 @@
 
 @media (max-width: 380px) {
   .textLayer {
-    font-size: 28px;
+    font-size: 1.5rem;
   }
 }
