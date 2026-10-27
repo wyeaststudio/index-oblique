@@ -18,9 +18,35 @@
   pointer-events: none;
 }
 
-.darkSurface {
+.darkFrame,
+.hud [data-dark='true'] {
   --hud-ink: var(--color-paper);
   --hud-ghost: var(--color-ghost-light);
+}
+
+.hud [data-hud-surface] {
+  color: var(--hud-ink);
+}
+
+.lightFrame,
+.darkFrame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.darkFrame {
+  clip-path: inset(var(--dark-top, 100%) 0 var(--dark-bottom, 0px));
+}
+
+.lightFrame {
+  mask-image: linear-gradient(
+    to bottom,
+    #000 var(--dark-top, 100%),
+    transparent var(--dark-top, 100%),
+    transparent calc(100% - var(--dark-bottom, 0px)),
+    #000 calc(100% - var(--dark-bottom, 0px))
+  );
 }
 
 .perimeter,

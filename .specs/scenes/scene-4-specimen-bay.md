@@ -32,6 +32,11 @@ When a slab is hovered:
    heavy `drop-shadow` SVG/CSS filters to simulate cathode bloom.
 5. **Parallax**: Subtle CSS 3D tilt tied to mouse position (`rotateX`,
    `rotateY`) applied to the slab carrier to sell the 3D effect.
+   Disable pointer-driven tilt and its transform when reduced motion is
+   requested; retain static plate placement and keyboard focus styling.
+
+Architecture-note numbers use Carbon ink on paper rather than the project
+accent, maintaining readable contrast at telemetry text sizes.
 
 ## Data Structure (Future Proofing)
 

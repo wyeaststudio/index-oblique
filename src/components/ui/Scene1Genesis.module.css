@@ -14,7 +14,8 @@
   height: 100svh;
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
-  padding: 24px clamp(20px, 4vw, 56px);
+  padding: max(72px, calc(env(safe-area-inset-top, 0px) + 48px))
+    clamp(20px, 4vw, 56px) 24px;
   background: var(--color-paper);
   color: var(--color-carbon);
 }

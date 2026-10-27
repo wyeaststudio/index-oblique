@@ -13,7 +13,6 @@ const scenes = [
 
 export function GlobalHUD() {
   const [preloaderVisible, setPreloaderVisible] = useState(true);
-  const [darkSceneVisible, setDarkSceneVisible] = useState(false);
   const [activeScene, setActiveScene] = useState<string | null>(null);
 
   useEffect(() => {
@@ -53,9 +52,8 @@ export function GlobalHUD() {
 
   useEffect(() => {
     const preloader = document.getElementById('preloader-container');
-    const darkScene = document.getElementById('scene-2');
 
-    if (!preloader && !darkScene) {
+    if (!preloader) {
       return;
     }
 
@@ -66,11 +64,6 @@ export function GlobalHUD() {
 
           if (entry.target.id === 'preloader-container') {
             setPreloaderVisible(visible);
-          } else if (entry.target.id === 'scene-2') {
-            setDarkSceneVisible(visible);
-            if (!preloader) {
-              setPreloaderVisible(false);
-            }
           }
         }
       },
@@ -82,23 +75,63 @@ export function GlobalHUD() {
       observer.observe(preloader);
     }
 
-    if (darkScene) {
-      observer.observe(darkScene);
-    }
-
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const hud = document.getElementById('global-hud');
+    const darkScene = document.getElementById('scene-2');
+    if (!hud || !darkScene) return;
+
+    const surfaces = hud.querySelectorAll<HTMLElement>('[data-hud-surface]');
+    let frame = 0;
+    const updateInk = () => {
+      frame = 0;
+      const bounds = darkScene.getBoundingClientRect();
+      for (const surface of surfaces) {
+        const slot = surface.getBoundingClientRect();
+        const center = slot.top + slot.height / 2;
+        surface.dataset.dark = String(center >= bounds.top && center < bounds.bottom);
+      }
+      hud.style.setProperty('--dark-top', `${Math.max(0, bounds.top)}px`);
+      hud.style.setProperty(
+        '--dark-bottom',
+        `${Math.max(0, window.innerHeight - bounds.bottom)}px`,
+      );
+    };
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateInk);
+    };
+    const observer = new ResizeObserver(scheduleUpdate);
+    observer.observe(hud);
+    observer.observe(darkScene);
+    updateInk();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+    };
   }, []);
 
   return (
     <div
       id="global-hud"
-      className={`${styles.hud} ${darkSceneVisible ? styles.darkSurface : ''} font-hud`}
+      className={`${styles.hud} font-hud`}
       role="region"
       aria-label="Global HUD"
       inert={preloaderVisible}
     >
-      <div className={styles.perimeter} aria-hidden="true" />
-      <div className={styles.registrationMarks} aria-hidden="true" />
+      <div className={styles.lightFrame} aria-hidden="true">
+        <div className={styles.perimeter} />
+        <div className={styles.registrationMarks} />
+      </div>
+      <div className={styles.darkFrame} aria-hidden="true">
+        <div className={styles.perimeter} />
+        <div className={styles.registrationMarks} />
+      </div>
       <nav
         className={styles.densityWedge}
         aria-label="Scene navigation"
@@ -106,6 +139,7 @@ export function GlobalHUD() {
         {scenes.map((scene) => (
           <a
             key={scene.id}
+            data-hud-surface
             className={`${styles.sceneLink} ${scene.color}`}
             href={`#${scene.id}`}
             aria-label={`Scene ${scene.label}`}
@@ -147,6 +181,7 @@ export function GlobalHUD() {
       <div className={styles.layout}>
         <div
           id="hud-brand-slot"
+          data-hud-surface
           className={`${styles.slot} ${styles.brandSlot}`}
         >
           <span className={styles.brandCrosshair} aria-hidden="true" />
@@ -162,6 +197,7 @@ export function GlobalHUD() {
 
         <div
           id="hud-catalog-slot"
+          data-hud-surface
           className={`${styles.slot} ${styles.catalogSlot}`}
         >
           <p className={styles.recordLine}>
@@ -175,6 +211,7 @@ export function GlobalHUD() {
 
         <div
           id="hud-oblique-slot"
+          data-hud-surface
           className={`${styles.slot} ${styles.obliqueSlot}`}
         >
           <p className={styles.strategy}>
@@ -187,6 +224,7 @@ export function GlobalHUD() {
 
         <div
           id="hud-progress-slot"
+          data-hud-surface
           className={`${styles.slot} ${styles.progressSlot}`}
         >
           <div id="muybridge-container" className={styles.horseFrame}>

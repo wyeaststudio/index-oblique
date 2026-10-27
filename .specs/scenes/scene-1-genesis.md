@@ -19,6 +19,9 @@ brand collapse.
 
 ## Interaction & Kinetic Rules
 
+- Reserve a safe-area-aware top HUD gutter on desktop and mobile so the
+  Genesis ledger never overlaps the docked brand or catalog controls.
+
 - **Video Velocity Scrub**: In `ScrollTrigger.onUpdate`, read
   `Math.abs(self.getVelocity())`. Scale `playbackRate` dynamically between `0.5`
   and `2.5`.

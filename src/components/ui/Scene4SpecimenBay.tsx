@@ -8,7 +8,10 @@ import type { ShowcaseProject } from '@/lib/showcase-projects';
 import styles from './Scene4SpecimenBay.module.css';
 
 function movePlate(event: PointerEvent<HTMLElement>) {
-  if (event.pointerType === 'touch') return;
+  if (
+    event.pointerType === 'touch' ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) return;
 
   const bounds = event.currentTarget.getBoundingClientRect();
   const x = (event.clientX - bounds.left) / bounds.width - 0.5;

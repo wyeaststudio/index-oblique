@@ -689,7 +689,7 @@
 }
 
 .architectureNotes li > span {
-  color: var(--plate-accent);
+  color: var(--color-carbon);
   font-family: var(--font-mono);
   font-size: var(--text-telemetry);
   font-weight: 700;
@@ -905,6 +905,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .plateButton {
+    transform: none;
+  }
+
   .specimen,
   .plate,
   .plateButton,
