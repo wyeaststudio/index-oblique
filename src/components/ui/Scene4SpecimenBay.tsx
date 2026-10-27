@@ -1,5 +1,13 @@
 import type { CSSProperties } from 'react';
+import { Roboto_Flex } from 'next/font/google';
 import styles from './Scene4SpecimenBay.module.css';
+
+// Needs both wdth and wght axes for the slab title compression/expansion.
+const specimenDisplay = Roboto_Flex({
+  variable: '--font-specimen-display',
+  subsets: ['latin'],
+  axes: ['wdth'],
+});
 
 type SpecimenVector = 'cube' | 'wave' | 'matrix' | 'torus';
 
@@ -115,7 +123,11 @@ const bedSpotlight = {
 
 export function Scene4SpecimenBay() {
   return (
-    <section id="scene-4" aria-labelledby="specimen-bay-title">
+    <section
+      id="scene-4"
+      className={specimenDisplay.variable}
+      aria-labelledby="specimen-bay-title"
+    >
       <div id="light-table-bed" className={styles.bed} style={bedSpotlight}>
         <h2 id="specimen-bay-title" className={styles.meta}>
           {'[IDX-03 // SPECIMEN BAY]'}
@@ -155,7 +167,7 @@ export function Scene4SpecimenBay() {
 
                 <div
                   className={`${styles.projection} arcade-projection-plane`}
-                  aria-hidden="true"
+                  aria-hidden={!isActive}
                 >
                   <VectorGlyph vector={specimen.vector} />
                   <dl className={styles.telemetry}>

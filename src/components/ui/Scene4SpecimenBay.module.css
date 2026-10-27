@@ -105,7 +105,7 @@
 
 .title {
   margin: 24px 0 8px;
-  font-family: 'Cabinet Grotesk', var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-specimen-display), var(--font-geist-sans), system-ui, sans-serif;
   font-size: clamp(40px, 8vw, 112px);
   font-weight: 400;
   font-variation-settings:
