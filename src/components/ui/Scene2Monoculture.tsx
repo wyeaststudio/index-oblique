@@ -55,9 +55,9 @@ export function Scene2Monoculture() {
 
           <div className={styles.log}>
             <p>[00:02:27] PATTERN REPEATS.</p>
-            <p>[00:02:28] ORIGINAL SIGNAL: <span className={styles.redacted} aria-label="redacted">UNRESOLVED</span></p>
+            <p>[00:02:28] ORIGINAL SIGNAL: <span className={styles.redacted} role="img" aria-label="redacted">UNRESOLVED</span></p>
             <p>[00:02:29] IDENTICAL SURFACES DETECTED.</p>
-            <p>[00:02:30] ORIGIN: <span className={styles.redacted} aria-label="redacted">MINZCODE / ARCHIVE</span></p>
+            <p>[00:02:30] ORIGIN: <span className={styles.redacted} role="img" aria-label="redacted">MINZCODE / ARCHIVE</span></p>
           </div>
 
           <figure className={styles.wireframe}>
@@ -74,7 +74,7 @@ export function Scene2Monoculture() {
             <p className={styles.label}>003 / RECOVERY PROTOCOL</p>
             <p>REJECT THE DEFAULT.</p>
             <p>RESTORE DEPTH. PRESERVE THE SIGNAL.</p>
-            <p>AUTHORIZATION: <span className={styles.redacted} aria-label="redacted">OBLIQUE INTERNAL</span></p>
+            <p>AUTHORIZATION: <span className={styles.redacted} role="img" aria-label="redacted">OBLIQUE INTERNAL</span></p>
           </div>
         </aside>
       </div>
