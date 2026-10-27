@@ -214,7 +214,7 @@
 }
 
 .row dt {
-  color: rgba(17, 17, 17, 0.55);
+  color: rgba(17, 17, 17, 0.6);
 }
 
 .row dd {
@@ -271,9 +271,10 @@ a.link:focus-visible {
   cursor: pointer;
 }
 
+/* Darkened process magenta: white on #ec008c is only ~4.25:1. */
 .button:hover {
-  border-color: #ec008c;
-  background: #ec008c;
+  border-color: #c8007a;
+  background: #c8007a;
   color: #ffffff;
 }
 
