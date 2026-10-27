@@ -52,7 +52,7 @@ export function Scene0Preloader() {
         aria-hidden="true"
       />
 
-      <main className={styles.stage}>
+      <div className={styles.stage}>
         <div id="halftone-poster-preview" className={styles.poster}>
           <svg
             className={styles.eyeGraphic}
@@ -131,7 +131,7 @@ export function Scene0Preloader() {
             aria-hidden="true"
           />
         </div>
-      </main>
+      </div>
 
       <footer id="preloader-status" className={styles.status}>
         <span>[PRESS RUN: IDX-00 // CALIBRATION MODE]</span>

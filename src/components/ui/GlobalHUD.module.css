@@ -108,6 +108,7 @@
   display: grid;
   grid-column: 2;
   grid-row: 1;
+  justify-self: end;
   justify-items: end;
   text-align: right;
 }

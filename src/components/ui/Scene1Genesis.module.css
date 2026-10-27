@@ -145,7 +145,18 @@
 
 @media (max-width: 600px) {
   .scene {
-    padding-block: 20px;
+    --hud-top-gutter: max(72px, calc(env(safe-area-inset-top, 0px) + 48px));
+    --hud-bottom-gutter: max(
+      88px,
+      calc(env(safe-area-inset-bottom, 0px) + 64px)
+    );
+    min-height: calc(100svh + var(--hud-top-gutter) + var(--hud-bottom-gutter) - 40px);
+    padding-top: var(--hud-top-gutter);
+    padding-bottom: var(--hud-bottom-gutter);
+  }
+
+  .scene {
+    padding-inline: 20px;
   }
 
   .ledgerTop,

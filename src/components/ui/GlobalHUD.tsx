@@ -1,12 +1,34 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import styles from './GlobalHUD.module.css';
 
 export function GlobalHUD() {
+  const [preloaderVisible, setPreloaderVisible] = useState(true);
+
+  useEffect(() => {
+    const preloader = document.getElementById('preloader-container');
+
+    if (!preloader) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setPreloaderVisible(entry.isIntersecting && entry.intersectionRatio > 0);
+    });
+
+    observer.observe(preloader);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
       id="global-hud"
       className={styles.hud}
       role="region"
       aria-label="Global HUD"
+      inert={preloaderVisible}
     >
       <div className={styles.perimeter} aria-hidden="true" />
       <div className={styles.registrationMarks} aria-hidden="true" />
