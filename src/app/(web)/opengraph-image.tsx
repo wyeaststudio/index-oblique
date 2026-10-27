@@ -1,7 +1,8 @@
 import { ImageResponse } from 'next/og';
+import { siteConfig } from '@/lib/site-config';
 
-export const runtime = 'edge';
-export const alt = 'Agency Template';
+export const runtime = 'nodejs';
+export const alt = 'Index/Oblique - Creative Development & Interactive Design';
 export const size = {
   width: 1200,
   height: 630,
@@ -26,9 +27,12 @@ export default function Image() {
       }}
     >
       <div style={{ fontSize: 24, marginBottom: 16, opacity: 0.8 }}>
-        Launch-ready template
+        Creative development lab & portfolio
       </div>
-      <div>Accessible, SEO, GEO, and AEO-ready</div>
+      <div>{siteConfig.name}</div>
+      <div style={{ fontSize: 28, marginTop: 24 }}>
+        Creative coding. Kinetic typography. Interactive experiences.
+      </div>
     </div>,
     size,
   );

@@ -1,21 +1,12 @@
 import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { buildWebPageJsonLd } from '@/lib/seo/json-ld';
 import { siteConfig } from '@/lib/site-config';
 
 const checklist = [
-  'Accessible semantics and keyboard-friendly navigation',
-  'Configurable metadata for search engines and AI assistants',
-  'Structured data defaults (Organization, WebSite, WebPage)',
-  'Sanity schema starter with page-level SEO fields',
-  'Crawler policy via robots, sitemap, and llms.txt endpoints',
+  'Creative coding and interactive web development',
+  'Kinetic typography and expressive web animation',
+  'Performance-first experiences from mobile through desktop',
+  'Accessible interaction design for touch, pointer, and keyboard',
 ];
 
 export default function HomePage() {
@@ -37,29 +28,33 @@ export default function HomePage() {
       <div className="w-full max-w-3xl space-y-6 text-center">
         <div className="space-y-3">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            Launch-ready template
+            Creative development lab & portfolio
           </p>
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Accessibility and discoverability are built in.
+            {siteConfig.name}
           </h1>
           <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-            This starter now includes configurable metadata, social cards, and
-            SEO defaults so new projects can be tuned before launch.
+            {siteConfig.description}
           </p>
         </div>
 
-        <Card className="border-border bg-card text-left">
-          <CardHeader>
-            <CardTitle>What is ready for your next project</CardTitle>
-            <CardDescription>
-              The template is prepared for accessible content structure and
-              search-friendly launch settings.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <section
+          aria-labelledby="readiness-heading"
+          className="space-y-4 rounded-lg border border-border bg-card p-4 text-left text-card-foreground"
+        >
+          <header className="space-y-1">
+            <h2 id="readiness-heading" className="text-base font-medium">
+              Creative development for agencies and design studios
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              A lab exploring the intersection of art direction, interaction
+              design, and performance-focused frontend engineering.
+            </p>
+          </header>
+          <div className="space-y-4">
             <ul
               className="list-disc space-y-2 pl-6 text-sm text-muted-foreground"
-              aria-label="Template readiness checklist"
+              aria-label="Creative development focus"
             >
               {checklist.map((item) => (
                 <li key={item}>{item}</li>
@@ -67,30 +62,21 @@ export default function HomePage() {
             </ul>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/studio"
-                target="_blank"
-                rel="noreferrer"
-                className={buttonVariants({ variant: 'default' })}
-              >
-                Open Sanity Studio
-              </Link>
-
-              <Link
                 href="/sitemap.xml"
-                className={buttonVariants({ variant: 'outline' })}
+                className="inline-flex min-h-8 items-center justify-center rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted hover:text-foreground"
               >
                 Preview sitemap
               </Link>
 
               <Link
                 href="/llms.txt"
-                className={buttonVariants({ variant: 'outline' })}
+                className="inline-flex min-h-8 items-center justify-center rounded-lg border border-border bg-background px-2.5 text-sm font-medium hover:bg-muted hover:text-foreground"
               >
                 View llms.txt
               </Link>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </section>
       </div>
     </main>
   );

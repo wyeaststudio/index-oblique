@@ -16,10 +16,13 @@ export function buildOrganizationJsonLd(): JsonLd {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${siteConfig.url}#organization`,
-    name: siteConfig.organization.legalName,
+    name: siteConfig.name,
+    legalName: siteConfig.organization.legalName,
+    description: siteConfig.description,
     url: siteConfig.url,
     logo: siteConfig.organization.logo,
     email: siteConfig.contact.email,
+    knowsAbout: siteConfig.keywords,
     sameAs,
   };
 }
@@ -35,11 +38,6 @@ export function buildWebSiteJsonLd(): JsonLd {
     inLanguage: siteConfig.locale.replace('_', '-'),
     publisher: {
       '@id': `${siteConfig.url}#organization`,
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteConfig.url}/search?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
     },
   };
 }
@@ -63,10 +61,6 @@ export function buildWebPageJsonLd(input: {
     },
     about: {
       '@id': `${siteConfig.url}#organization`,
-    },
-    primaryImageOfPage: {
-      '@type': 'ImageObject',
-      url: siteConfig.images.og,
     },
   };
 }

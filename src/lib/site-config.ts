@@ -1,18 +1,20 @@
 import type { Metadata } from 'next';
 
-const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com';
-const defaultName = process.env.NEXT_PUBLIC_SITE_NAME ?? 'Agency Template';
-const defaultTitle = process.env.NEXT_PUBLIC_SITE_TITLE ?? defaultName;
+const defaultUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://indexoblique.studio';
+const defaultName = process.env.NEXT_PUBLIC_SITE_NAME ?? 'Index/Oblique';
+const defaultTitle =
+  process.env.NEXT_PUBLIC_SITE_TITLE ??
+  `${defaultName} | Creative Development & Interactive Design`;
 const defaultDescription =
   process.env.NEXT_PUBLIC_SITE_DESCRIPTION ??
-  'A launch-ready Next.js and Sanity starter with accessible structure, SEO defaults, and configurable metadata for GEO and AEO.';
+  'Index/Oblique is a creative development lab and portfolio exploring creative coding, kinetic typography, and interactive web experiences for agencies and design studios.';
 const defaultKeywords =
   process.env.NEXT_PUBLIC_SITE_KEYWORDS ??
-  'agency website, next.js, sanity, seo, accessibility, geo, aeo';
+  'creative developer, creative development portfolio, creative coding, interactive web development, interaction design, kinetic typography, web animation, agency collaboration';
 const defaultLocale = process.env.NEXT_PUBLIC_SITE_LOCALE ?? 'en_US';
-const defaultLogo = process.env.NEXT_PUBLIC_SITE_LOGO ?? `${defaultUrl}/logo.png`;
-const defaultContactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'hello@example.com';
+const defaultLogo = process.env.NEXT_PUBLIC_SITE_LOGO;
+const defaultContactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
 
 export const siteConfig = {
   name: defaultName,
@@ -56,6 +58,12 @@ export function createMetadata(overrides: Metadata = {}): Metadata {
     },
     description: siteConfig.description,
     keywords: siteConfig.keywords,
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+      other: process.env.BING_SITE_VERIFICATION
+        ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
+        : undefined,
+    },
     alternates: {
       canonical: '/',
     },

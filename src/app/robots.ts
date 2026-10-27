@@ -1,9 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { ALWAYS_BLOCKED_PATHS, AI_AND_SEARCH_CRAWLERS } from '@/lib/crawlers';
-
-const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com'
-).replace(/\/$/, '');
+import { siteConfig } from '@/lib/site-config';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -18,7 +15,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [...ALWAYS_BLOCKED_PATHS],
       },
     ],
-    sitemap: `${siteUrl}/sitemap.xml`,
-    host: siteUrl,
+    sitemap: `${siteConfig.url}/sitemap.xml`,
+    host: siteConfig.url,
   };
 }

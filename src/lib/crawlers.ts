@@ -29,4 +29,4 @@ export const AI_AND_SEARCH_CRAWLERS = [
   'cohere-training-data-crawler',
 ] as const;
 
-export const ALWAYS_BLOCKED_PATHS = ['/studio', '/api/'] as const;
+export const ALWAYS_BLOCKED_PATHS = ['/api/'] as const;
