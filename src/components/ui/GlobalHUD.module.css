@@ -1,0 +1,251 @@
+.hud {
+  position: fixed;
+  z-index: 900;
+  inset: 0;
+  box-sizing: border-box;
+  padding: max(24px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+    max(24px, env(safe-area-inset-left));
+  color: #111111;
+  font-family: var(--font-geist-mono), monospace;
+  pointer-events: none;
+}
+
+.perimeter,
+.registrationMarks {
+  position: absolute;
+  inset: max(24px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom))
+    max(24px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+
+.perimeter {
+  border: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.registrationMarks {
+  background-image:
+    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
+    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
+    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111),
+    linear-gradient(#111111, #111111), linear-gradient(#111111, #111111);
+  background-repeat: no-repeat;
+  background-size:
+    9px 1px,
+    1px 9px,
+    9px 1px,
+    1px 9px,
+    9px 1px,
+    1px 9px,
+    9px 1px,
+    1px 9px;
+  background-position:
+    left 8px top 8px,
+    left 12px top 4px,
+    right 8px top 8px,
+    right 12px top 4px,
+    left 8px bottom 8px,
+    left 12px bottom 4px,
+    right 8px bottom 8px,
+    right 12px bottom 4px;
+}
+
+.layout {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.slot {
+  z-index: 1;
+  width: fit-content;
+  font-size: 11px;
+  line-height: 1.4;
+  pointer-events: auto;
+}
+
+.brandSlot {
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.brandCrosshair {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+}
+
+.brandCrosshair::before,
+.brandCrosshair::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #111111;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.brandCrosshair::before {
+  width: 12px;
+  height: 1px;
+}
+
+.brandCrosshair::after {
+  width: 1px;
+  height: 12px;
+}
+
+.catalogSlot {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  justify-items: end;
+  text-align: right;
+}
+
+.recordLine {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.recordDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e11d2e;
+}
+
+.pullButton,
+.strategyButton {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: inherit;
+}
+
+.pullButton:hover,
+.strategyButton:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pullButton:focus-visible,
+.strategyButton:focus-visible {
+  outline: 1px solid #111111;
+  outline-offset: 4px;
+}
+
+.obliqueSlot {
+  display: grid;
+  align-self: end;
+  grid-column: 1;
+  grid-row: 3;
+  justify-items: start;
+  max-width: min(380px, calc(100vw - 144px));
+}
+
+.strategy {
+  margin: 0 0 6px;
+}
+
+.strategyButton {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.35);
+}
+
+.progressSlot {
+  display: flex;
+  grid-column: 2;
+  grid-row: 3;
+  align-items: center;
+  justify-self: end;
+  gap: 8px;
+  text-align: right;
+}
+
+.horseFrame {
+  display: grid;
+  width: 48px;
+  height: 32px;
+  flex: 0 0 48px;
+  place-items: center;
+  border: 1px solid rgba(17, 17, 17, 0.15);
+}
+
+.horseFrame svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.progressTelemetry {
+  display: grid;
+  gap: 2px;
+}
+
+.progressTelemetry span {
+  white-space: nowrap;
+}
+
+.densityWedge {
+  position: absolute;
+  top: 50%;
+  right: max(8px, env(safe-area-inset-right));
+  display: grid;
+  gap: 2px;
+  transform: translateY(-50%);
+}
+
+.densityWedge span {
+  width: 8px;
+  height: 12px;
+}
+
+.cyan {
+  background: #00f0ff;
+}
+
+.magenta {
+  background: #ec008c;
+}
+
+.yellow {
+  background: #ffeb00;
+}
+
+.key {
+  background: #111111;
+}
+
+@media (max-width: 560px) {
+  .slot {
+    font-size: 9px;
+  }
+
+  .obliqueSlot {
+    max-width: min(210px, calc(100vw - 144px));
+  }
+
+  .strategy {
+    overflow-wrap: anywhere;
+  }
+
+  .progressSlot {
+    gap: 5px;
+  }
+}
