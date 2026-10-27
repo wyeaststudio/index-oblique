@@ -19,7 +19,7 @@ const rasterLines = Array.from({ length: 25 }, (_, index) => 158 + index * 6);
 
 export function Scene1Genesis() {
   return (
-    <section id="scene-1" className={styles.scene}>
+    <section id="scene-1" className={`${styles.scene} paper-texture`}>
       <header className={styles.ledgerTop}>
         <p>[IDX-00 // MACHINE GENESIS]</p>
         <p>REV: 2026.01</p>
@@ -27,11 +27,15 @@ export function Scene1Genesis() {
 
       <div className={styles.stage}>
         <div id="brand-title-banner" className={styles.titleBanner}>
-          <h1 id="brand-title">
-            <span id="bracket-l">&lt;</span>
+          <h1
+            id="brand-title"
+            className={`${styles.logo} font-logo tracking-tight antialiased`}
+            aria-label="[index/oblique>"
+          >
+            <span id="bracket-l">[</span>
             <span id="char-i">I</span>
             <span className="dissolve-char">ndex</span>
-            <span className="dissolve-char">/</span>
+            <span>/</span>
             <span id="char-o">O</span>
             <span className="dissolve-char">blique</span>
             <span id="bracket-r">&gt;</span>

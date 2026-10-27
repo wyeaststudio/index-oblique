@@ -6,8 +6,8 @@
   min-height: 100vh;
   min-height: 100svh;
   padding: 136px clamp(20px, 4vw, 56px);
-  background: #f3efe6;
-  color: #111111;
+  background: var(--color-paper);
+  color: var(--color-carbon);
   overflow: hidden;
   isolation: isolate;
 }
@@ -16,8 +16,8 @@
   position: absolute;
   z-index: 1;
   margin: 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
   line-height: 1.6;
   letter-spacing: 0;
 }
@@ -68,7 +68,7 @@
   inset: 0;
   background: repeating-conic-gradient(
     from 0deg at 50% 62%,
-    rgba(17, 17, 17, 0.12) 0deg 5deg,
+    var(--color-ghost-ink) 0deg 5deg,
     transparent 5deg 10deg,
     #e6dece 10deg 15deg,
     transparent 15deg 20deg
@@ -78,7 +78,7 @@
 .halftone {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(17, 17, 17, 0.12) 1.6px, transparent 2px) 0 0 / 10px 10px;
+  background: radial-gradient(circle, var(--color-ghost-ink) 1.6px, transparent 2px) 0 0 / 10px 10px;
   -webkit-mask-image: radial-gradient(circle at 50% 62%, #000 0 18%, transparent 46%);
   mask-image: radial-gradient(circle at 50% 62%, #000 0 18%, transparent 46%);
 }
@@ -91,7 +91,7 @@
   width: 88%;
   height: 34%;
   overflow: visible;
-  filter: drop-shadow(6px 6px 0 #111111);
+  filter: drop-shadow(6px 6px 0 var(--color-carbon));
 }
 
 /* Layer 2 — Winged Clouds */
@@ -120,12 +120,12 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(8px 8px 0 #111111);
+  filter: drop-shadow(8px 8px 0 var(--color-carbon));
 }
 
 .anchorRight .cloudSvg {
   transform: scaleX(-1);
-  filter: drop-shadow(-8px 8px 0 #111111);
+  filter: drop-shadow(-8px 8px 0 var(--color-carbon));
 }
 
 /* Layer 3 — Reeder Manifesto */
@@ -154,35 +154,35 @@
   line-height: 0.9;
   letter-spacing: 0;
   color: transparent;
-  background: repeating-linear-gradient(45deg, #ec008c 0 14px, #111111 14px 28px);
+  background: repeating-linear-gradient(45deg, var(--color-process-magenta) 0 14px, var(--color-carbon) 14px 28px);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 2px #111111;
-  filter: drop-shadow(6px 6px 0 #111111);
+  -webkit-text-stroke: 2px var(--color-carbon);
+  filter: drop-shadow(6px 6px 0 var(--color-carbon));
 }
 
 .tape {
   display: inline-block;
   padding: 0.35em 0.8em;
-  background: #111111;
-  color: #ffffff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: var(--color-carbon);
+  color: var(--color-exposure-white);
+  font-family: var(--font-mono);
   font-size: clamp(14px, 2.2vw, 28px);
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35), 0 -1px 0 #000000;
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), inset 0 -2px 0 #000000, 6px 6px 0 rgba(17, 17, 17, 0.35);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--color-exposure-white) 35%, transparent), 0 -1px 0 #000000;
+  box-shadow: inset 0 2px 0 color-mix(in srgb, var(--color-exposure-white) 14%, transparent), inset 0 -2px 0 #000000, 6px 6px 0 color-mix(in srgb, var(--color-carbon) 35%, transparent);
   transform: rotate(-2deg);
 }
 
 .checkerPlate {
   display: inline-block;
   padding: 0.2em 0.4em;
-  border: 2px solid #111111;
-  background: conic-gradient(#ffeb00 25%, #111111 0 50%, #ffeb00 0 75%, #111111 0) 0 0 / 16px 16px;
+  border: 2px solid var(--color-carbon);
+  background: conic-gradient(var(--color-process-yellow) 25%, var(--color-carbon) 0 50%, var(--color-process-yellow) 0 75%, var(--color-carbon) 0) 0 0 / 16px 16px;
   background-origin: content-box;
-  box-shadow: 8px 8px 0 #111111;
+  box-shadow: 8px 8px 0 var(--color-carbon);
 }
 
 .checker {
@@ -194,10 +194,10 @@
   letter-spacing: 0;
   color: transparent;
   /* Phase-shifted one cell so glyphs read as the inverse of the plate. */
-  background: conic-gradient(#111111 25%, #ffeb00 0 50%, #111111 0 75%, #ffeb00 0) 0 0 / 16px 16px;
+  background: conic-gradient(var(--color-carbon) 25%, var(--color-process-yellow) 0 50%, var(--color-carbon) 0 75%, var(--color-process-yellow) 0) 0 0 / 16px 16px;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 2px #111111;
+  -webkit-text-stroke: 2px var(--color-carbon);
   paint-order: stroke fill;
 }
 
@@ -223,7 +223,7 @@
   width: 100%;
   height: auto;
   overflow: visible;
-  filter: drop-shadow(6px 6px 0 #111111);
+  filter: drop-shadow(6px 6px 0 var(--color-carbon));
 }
 
 .pupil {
@@ -235,7 +235,7 @@
   position: absolute;
   height: auto;
   overflow: visible;
-  filter: drop-shadow(10px 10px 0 #111111);
+  filter: drop-shadow(10px 10px 0 var(--color-carbon));
 }
 
 .boltA {

@@ -7,10 +7,10 @@ duration[span_9](start_span)[span_9](end_span).
 
 ## Phase 1: Scene 1 Exit (0.0 to 0.5 Progress)
 
-- Inner characters of `<Index/Oblique>` (`ndex/` and `blique`) fade out with
+- Inner characters of `[index/oblique>` (`ndex` and `blique`) fade out with
   horizontal blur (`filter: blur(8px)`, `opacity: 0`).
-- Outer brackets cinch onto `I` and `O`.
-- At 0.5 progress, GSAP Flip transfers `<I/O>` from Scene 1's flow into
+- The outer brackets cinch around the retained `I/O` to form `[I/O>`.
+- At 0.5 progress, GSAP Flip transfers `[I/O>` from Scene 1's flow into
   `#hud-brand-slot` in the persistent
   HUD[span_10](start_span)[span_10](end_span).
 - `#eye-video` scales vertically by 300% via an SVG displacement filter to

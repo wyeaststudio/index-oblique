@@ -5,19 +5,38 @@ import styles from './GlobalHUD.module.css';
 
 export function GlobalHUD() {
   const [preloaderVisible, setPreloaderVisible] = useState(true);
+  const [darkSceneVisible, setDarkSceneVisible] = useState(false);
 
   useEffect(() => {
     const preloader = document.getElementById('preloader-container');
+    const darkScene = document.getElementById('scene-2');
 
-    if (!preloader) {
+    if (!preloader && !darkScene) {
       return;
     }
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setPreloaderVisible(entry.isIntersecting && entry.intersectionRatio > 0);
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const visible = entry.isIntersecting && entry.intersectionRatio > 0;
+
+        if (entry.target.id === 'preloader-container') {
+          setPreloaderVisible(visible);
+        } else if (entry.target.id === 'scene-2') {
+          setDarkSceneVisible(visible);
+          if (!preloader) {
+            setPreloaderVisible(false);
+          }
+        }
+      }
     });
 
-    observer.observe(preloader);
+    if (preloader) {
+      observer.observe(preloader);
+    }
+
+    if (darkScene) {
+      observer.observe(darkScene);
+    }
 
     return () => observer.disconnect();
   }, []);
@@ -25,7 +44,7 @@ export function GlobalHUD() {
   return (
     <div
       id="global-hud"
-      className={styles.hud}
+      className={`${styles.hud} ${darkSceneVisible ? styles.darkSurface : ''} font-hud`}
       role="region"
       aria-label="Global HUD"
       inert={preloaderVisible}

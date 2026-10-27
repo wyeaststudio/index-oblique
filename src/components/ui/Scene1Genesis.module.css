@@ -7,8 +7,8 @@
   grid-template-rows: auto minmax(0, 1fr) auto;
   overflow: hidden;
   padding: 24px clamp(20px, 4vw, 56px);
-  background: #f3efe6;
-  color: #111111;
+  background: var(--color-paper);
+  color: var(--color-carbon);
 }
 
 .ledgerTop,
@@ -16,15 +16,17 @@
   position: relative;
   z-index: 3;
   display: flex;
+  min-width: 0;
   align-items: center;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
   line-height: 1.4;
 }
 
 .ledgerTop {
-  justify-content: flex-end;
-  gap: 24px;
+  justify-content: space-between;
 }
 
 .ledgerBottom {
@@ -52,7 +54,7 @@
   width: min(720px, 100%);
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1px solid rgba(17, 17, 17, 0.12);
+  border: 1px solid var(--color-ghost-ink);
 }
 
 .mediaLayer {
@@ -73,14 +75,14 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12)),
-    linear-gradient(rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.12));
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink)),
+    linear-gradient(var(--color-ghost-ink), var(--color-ghost-ink));
   background-repeat: no-repeat;
   background-size:
     9px 1px,
@@ -105,8 +107,10 @@
 .mediaMetadata {
   position: absolute;
   z-index: 3;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  max-width: calc(100% - 40px);
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
   line-height: 1.4;
 }
 
@@ -129,18 +133,29 @@
   padding: 12px;
 }
 
-.titleBanner h1 {
+.logo {
+  max-width: 100%;
   margin: 0;
-  color: #111111;
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(3rem, 9vw, 8rem);
-  font-weight: 900;
+  color: var(--color-carbon);
+  font-size: clamp(1.5rem, 7vw, 8rem);
+  font-weight: 400;
   line-height: 0.95;
+  text-transform: lowercase;
   white-space: nowrap;
+  text-align: center;
 }
 
-.titleBanner h1 span {
+.logo span {
   display: inline;
+}
+
+.logo:global(.collapsed) {
+  text-transform: uppercase;
+}
+
+.logo:global(.collapsed) :global(.dissolve-char) {
+  opacity: 0;
+  filter: blur(8px);
 }
 
 @media (max-width: 600px) {
@@ -163,15 +178,16 @@
 
   .ledgerTop,
   .ledgerBottom {
-    font-size: 9px;
+    font-size: var(--text-micro);
   }
 
   .ledgerTop {
-    gap: 12px;
+    justify-content: space-between;
+    gap: 4px 8px;
   }
 
   .mediaMetadata {
-    font-size: 8px;
+    font-size: var(--text-tiny);
   }
 
   .feed {
@@ -182,7 +198,7 @@
     right: 12px;
   }
 
-  .titleBanner h1 {
-    font-size: clamp(2.4rem, 9vw, 3.4rem);
+  .logo {
+    font-size: clamp(1.25rem, 7vw, 3.4rem);
   }
 }

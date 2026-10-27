@@ -151,7 +151,7 @@ export function Scene5Colophon() {
   return (
     <section
       id="scene-5"
-      className={styles.scene}
+      className={`${styles.scene} paper-texture`}
       aria-labelledby="colophon-title"
     >
       <header className={styles.meta}>

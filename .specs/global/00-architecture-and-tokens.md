@@ -10,12 +10,25 @@
   - Primary Variable: Cabinet Grotesk (or similar variable grotesque supporting
     `wdth` and `wght`)
   - Monospace: Custom/System Mono (for telemetry and Oblique Strategies)
+  - Logo Display: Major Mono Display (Scene 1 masthead)
 
-## 2. Color Palette (Industrial Print Shop)
+  ## Styling Convention
+
+  - In CSS Modules and other component stylesheets, use Tailwind theme variables
+    for values that have an equivalent token, including colors, font families,
+    and font sizes. Do not duplicate those token values as literals.
+  - Define or update shared tokens in the global Tailwind theme when a repeated
+    design value has no existing token.
+  - Keep one-off values and component-specific layout or visual treatments local
+    when they do not represent a shared design token.
+
+  ## 2. Color Palette (Industrial Print Shop)
 
 - Background / Substrates:
   - Swiss Coffee (Main Paper): `#F3EFE6`
   - Light Table Frosted Base: `#ECE9E2`
+  - Paper surfaces carry a subtle, repeatable grain texture beneath scene
+    content; keep it low-contrast so typography and print artwork remain clear.
 - Inks & Elements:
   - Carbon Black (Primary Text/Borders): `#111111`
   - Ghost Ink (Subtle Grid/Borders): `rgba(17, 17, 17, 0.12)`

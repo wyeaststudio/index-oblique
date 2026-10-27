@@ -8,9 +8,9 @@
   min-height: 100vh;
   min-height: 100svh;
   padding: 48px 24px;
-  background: #f3efe6;
-  color: #111111;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: var(--color-paper);
+  color: var(--color-carbon);
+  font-family: var(--font-mono);
 }
 
 .meta {
@@ -20,8 +20,8 @@
   width: 100%;
   max-width: 72rem;
   padding-bottom: 12px;
-  border-bottom: 1px solid #111111;
-  font-size: 11px;
+  border-bottom: 1px solid var(--color-carbon);
+  font-size: var(--text-telemetry);
   line-height: 1.6;
   letter-spacing: 0.04em;
 }
@@ -47,17 +47,17 @@
   position: relative;
   width: min(380px, calc(100vw - 72px));
   aspect-ratio: 380 / 460;
-  border: 1px solid #111111;
-  background: #f3efe6;
+  border: 1px solid var(--color-carbon);
+  background: var(--color-paper);
   isolation: isolate;
 }
 
 .reg {
   position: absolute;
-  font-size: 11px;
+  font-size: var(--text-telemetry);
   line-height: 1;
   letter-spacing: 0;
-  color: #111111;
+  color: var(--color-carbon);
   pointer-events: none;
 }
 
@@ -90,25 +90,25 @@
 
 .plate-cyan {
   --screen-angle: 15deg;
-  color: #00f0ff;
+  color: var(--color-process-cyan);
   transform: translate(-12px, -8px);
 }
 
 .plate-magenta {
   --screen-angle: 75deg;
-  color: #ec008c;
+  color: var(--color-process-magenta);
   transform: translate(12px, 6px);
 }
 
 .plate-yellow {
   --screen-angle: 0deg;
-  color: #ffeb00;
+  color: var(--color-process-yellow);
   transform: translate(-6px, 10px);
 }
 
 .plate-key {
   --screen-angle: 45deg;
-  color: #111111;
+  color: var(--color-carbon);
   transform: translate(0, 0);
 }
 
@@ -119,16 +119,16 @@
 }
 
 .portraitLabel {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--text-telemetry);
   letter-spacing: 0.08em;
 }
 
 .caption {
-  font-size: 11px;
+  font-size: var(--text-telemetry);
   line-height: 1.6;
   letter-spacing: 0.04em;
-  color: rgba(17, 17, 17, 0.6);
+  color: color-mix(in srgb, var(--color-carbon) 60%, transparent);
 }
 
 /* ---------- Colophon ledger ---------- */
@@ -138,8 +138,8 @@
   grid-template-columns: 1fr;
   width: 100%;
   max-width: 72rem;
-  border-top: 1px solid #111111;
-  border-bottom: 1px solid #111111;
+  border-top: 1px solid var(--color-carbon);
+  border-bottom: 1px solid var(--color-carbon);
 }
 
 @media (min-width: 640px) {
@@ -156,15 +156,15 @@
 
 .column {
   padding: 20px 16px 24px;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
-  font-size: 11px;
+  border-bottom: 1px solid var(--color-ghost-ink);
+  font-size: var(--text-telemetry);
   line-height: 1.7;
   letter-spacing: 0.04em;
 }
 
 @media (min-width: 640px) {
   .column:nth-child(odd) {
-    border-right: 1px solid rgba(17, 17, 17, 0.12);
+    border-right: 1px solid var(--color-ghost-ink);
   }
 
   .column:nth-last-child(-n + 2) {
@@ -178,11 +178,11 @@
   }
 
   .column:not(:last-child) {
-    border-right: 1px solid rgba(17, 17, 17, 0.12);
+    border-right: 1px solid var(--color-ghost-ink);
   }
 
   .column {
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 }
 
@@ -195,7 +195,7 @@
   gap: 12px;
   margin: 0 0 16px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #111111;
+  border-bottom: 1px solid var(--color-carbon);
   font-size: inherit;
   font-weight: 700;
 }
@@ -214,7 +214,7 @@
 }
 
 .row dt {
-  color: rgba(17, 17, 17, 0.6);
+  color: color-mix(in srgb, var(--color-carbon) 60%, transparent);
 }
 
 .row dd {
@@ -231,22 +231,22 @@
 }
 
 .link {
-  color: #111111;
+  color: var(--color-carbon);
   text-decoration: none;
 }
 
 a.link:hover {
-  background: #111111;
-  color: #f3efe6;
+  background: var(--color-carbon);
+  color: var(--color-paper);
 }
 
 a.link:focus-visible {
-  outline: 1px solid #ec008c;
+  outline: 1px solid var(--color-process-magenta);
   outline-offset: 2px;
 }
 
 .link[aria-disabled='true'] {
-  color: rgba(17, 17, 17, 0.35);
+  color: color-mix(in srgb, var(--color-carbon) 35%, transparent);
 }
 
 /* ---------- Re-crank CTA ---------- */
@@ -260,12 +260,12 @@ a.link:focus-visible {
 
 .button {
   padding: 16px 32px;
-  border: 2px solid #111111;
+  border: 2px solid var(--color-carbon);
   border-radius: 0;
-  background: #111111;
-  color: #f3efe6;
+  background: var(--color-carbon);
+  color: var(--color-paper);
   font-family: inherit;
-  font-size: 12px;
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   cursor: pointer;
@@ -275,10 +275,10 @@ a.link:focus-visible {
 .button:hover {
   border-color: #c8007a;
   background: #c8007a;
-  color: #ffffff;
+  color: var(--color-exposure-white);
 }
 
 .button:focus-visible {
-  outline: 2px solid #ec008c;
+  outline: 2px solid var(--color-process-magenta);
   outline-offset: 4px;
 }

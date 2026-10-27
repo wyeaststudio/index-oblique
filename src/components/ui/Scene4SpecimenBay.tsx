@@ -128,7 +128,11 @@ export function Scene4SpecimenBay() {
       className={specimenDisplay.variable}
       aria-labelledby="specimen-bay-title"
     >
-      <div id="light-table-bed" className={styles.bed} style={bedSpotlight}>
+      <div
+        id="light-table-bed"
+        className={`${styles.bed} paper-texture`}
+        style={bedSpotlight}
+      >
         <h2 id="specimen-bay-title" className={styles.meta}>
           {'[IDX-03 // SPECIMEN BAY]'}
         </h2>

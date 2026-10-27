@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Major_Mono_Display } from 'next/font/google';
 import { StructuredData } from '@/components/seo/structured-data';
 import { createMetadata, siteConfig } from '@/lib/site-config';
 import '../tailwind.generated.css';
@@ -12,6 +12,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const majorMonoDisplay = Major_Mono_Display({
+  variable: '--font-logo',
+  subsets: ['latin'],
+  weight: '400',
+  display: 'block',
 });
 
 export const metadata: Metadata = createMetadata({
@@ -32,9 +39,31 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${majorMonoDisplay.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="preload"
+          href="/fonts/DraftingMono-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/DraftingMono-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <a
           href="#main-content"

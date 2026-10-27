@@ -34,7 +34,10 @@ const irisMarks = Array.from({ length: 16 }, (_, index) => {
 
 export function Scene0Preloader() {
   return (
-    <div id="preloader-container" className={styles.container}>
+    <div
+      id="preloader-container"
+      className={`${styles.container} font-hud paper-texture`}
+    >
       <span
         className={`${styles.registrationMark} ${styles.topLeft}`}
         aria-hidden="true"
