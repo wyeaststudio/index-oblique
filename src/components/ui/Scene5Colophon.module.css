@@ -1,0 +1,283 @@
+.scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 48px 24px;
+  background: #f3efe6;
+  color: #111111;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  max-width: 72rem;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #111111;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+.metaTitle {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* ---------- CMYK specimen ---------- */
+
+.specimen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+}
+
+/* Isolation keeps multiply blending scoped to the paper inside the frame. */
+.frame {
+  position: relative;
+  width: min(380px, calc(100vw - 72px));
+  aspect-ratio: 380 / 460;
+  border: 1px solid #111111;
+  background: #f3efe6;
+  isolation: isolate;
+}
+
+.reg {
+  position: absolute;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #111111;
+  pointer-events: none;
+}
+
+.regTL {
+  top: -6px;
+  left: -10px;
+}
+
+.regTR {
+  top: -6px;
+  right: -10px;
+}
+
+.regBL {
+  bottom: -6px;
+  left: -10px;
+}
+
+.regBR {
+  bottom: -6px;
+  right: -10px;
+}
+
+.plate {
+  position: absolute;
+  inset: 20px;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.plate-cyan {
+  --screen-angle: 15deg;
+  color: #00f0ff;
+  transform: translate(-12px, -8px);
+}
+
+.plate-magenta {
+  --screen-angle: 75deg;
+  color: #ec008c;
+  transform: translate(12px, 6px);
+}
+
+.plate-yellow {
+  --screen-angle: 0deg;
+  color: #ffeb00;
+  transform: translate(-6px, 10px);
+}
+
+.plate-key {
+  --screen-angle: 45deg;
+  color: #111111;
+  transform: translate(0, 0);
+}
+
+.portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.portraitLabel {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.caption {
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: rgba(17, 17, 17, 0.6);
+}
+
+/* ---------- Colophon ledger ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  max-width: 72rem;
+  border-top: 1px solid #111111;
+  border-bottom: 1px solid #111111;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.column {
+  padding: 20px 16px 24px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+  font-size: 11px;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 640px) {
+  .column:nth-child(odd) {
+    border-right: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  .column:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .column {
+    border-bottom: 0;
+  }
+
+  .column:not(:last-child) {
+    border-right: 1px solid rgba(17, 17, 17, 0.12);
+  }
+
+  .column {
+    font-size: 12px;
+  }
+}
+
+.column:last-child {
+  border-bottom: 0;
+}
+
+.columnTitle {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #111111;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 9ch 1fr;
+  gap: 8px;
+}
+
+.row dt {
+  color: rgba(17, 17, 17, 0.55);
+}
+
+.row dd {
+  margin: 0;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  color: #111111;
+  text-decoration: none;
+}
+
+a.link:hover {
+  background: #111111;
+  color: #f3efe6;
+}
+
+a.link:focus-visible {
+  outline: 1px solid #ec008c;
+  outline-offset: 2px;
+}
+
+.link[aria-disabled='true'] {
+  color: rgba(17, 17, 17, 0.35);
+}
+
+/* ---------- Re-crank CTA ---------- */
+
+.cta {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.button {
+  padding: 16px 32px;
+  border: 2px solid #111111;
+  border-radius: 0;
+  background: #111111;
+  color: #f3efe6;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: #ec008c;
+  background: #ec008c;
+  color: #ffffff;
+}
+
+.button:focus-visible {
+  outline: 2px solid #ec008c;
+  outline-offset: 4px;
+}
