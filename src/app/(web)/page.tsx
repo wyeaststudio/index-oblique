@@ -1,5 +1,6 @@
 import { Scene0Preloader } from '@/components/ui/Scene0Preloader';
 import { Scene1Genesis } from '@/components/ui/Scene1Genesis';
+import { Scene2Monoculture } from '@/components/ui/Scene2Monoculture';
 import { GlobalHUD } from '@/components/ui/GlobalHUD';
 import { buildWebPageJsonLd } from '@/lib/seo/json-ld';
 import { siteConfig } from '@/lib/site-config';
@@ -20,6 +21,7 @@ export default function HomePage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd) }}
         />
         <Scene1Genesis />
+        <Scene2Monoculture />
       </main>
       <GlobalHUD />
     </>
