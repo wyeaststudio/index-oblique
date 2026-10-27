@@ -5,7 +5,7 @@
   width: 100%;
   min-height: 100vh;
   min-height: 100svh;
-  padding: 96px clamp(20px, 4vw, 56px);
+  padding: 136px clamp(20px, 4vw, 56px);
   background: #f3efe6;
   color: #111111;
   overflow: hidden;
@@ -22,13 +22,14 @@
   letter-spacing: 0;
 }
 
+/* Offsets clear the fixed GlobalHUD corner slots (24px inset + slot height). */
 .metaTop {
-  top: 32px;
+  top: calc(max(24px, env(safe-area-inset-top)) + 56px);
   right: clamp(20px, 4vw, 56px);
 }
 
 .metaBottom {
-  bottom: 32px;
+  bottom: calc(max(24px, env(safe-area-inset-bottom)) + 64px);
   left: clamp(20px, 4vw, 56px);
 }
 
@@ -180,6 +181,7 @@
   padding: 0.2em 0.4em;
   border: 2px solid #111111;
   background: conic-gradient(#ffeb00 25%, #111111 0 50%, #ffeb00 0 75%, #111111 0) 0 0 / 16px 16px;
+  background-origin: content-box;
   box-shadow: 8px 8px 0 #111111;
 }
 
@@ -258,6 +260,15 @@
 }
 
 @media (max-width: 700px) {
+  .scene {
+    padding-bottom: 176px;
+  }
+
+  /* HUD strategy text wraps to multiple lines at this width. */
+  .metaBottom {
+    bottom: calc(max(24px, env(safe-area-inset-bottom)) + 96px);
+  }
+
   .stage {
     aspect-ratio: 4 / 5;
   }
